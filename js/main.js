@@ -7,10 +7,22 @@ window.onload = function(){
 
 document.getElementById("mostra").addEventListener("click", mostra_numeros);
 
+let num1;
+let num2;
 function mostra_numeros(){
     num1 = document.getElementById("t1").value;
     num2 = document.getElementById("t2").value;
-
+    num1 = validar(num1);
+    num2 = validar(num2);
     document.getElementById("num1").innerHTML = num1;
     document.getElementById("num2").innerHTML = num2;
+}
+
+function validar(num){
+        if (num<=20 && num>=5){
+            return num;
+        }
+        else{
+            return 'No funciona';
+        }
 }
