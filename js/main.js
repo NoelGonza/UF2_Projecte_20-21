@@ -14,8 +14,13 @@ function mostra_numeros(){
     num2 = document.getElementById("t2").value;
     num1 = validar(num1);
     num2 = validar(num2);
-    document.getElementById("num1").innerHTML = num1;
-    document.getElementById("num2").innerHTML = num2;
+    if (num1 == 0 || num2 == 0){
+        alert("Els valors han de tenir un valor entre 5 i 20");
+    }
+    else{
+        document.getElementById("num1").innerHTML = num1;
+        document.getElementById("num2").innerHTML = num2;
+    }
 }
 
 function validar(num){
@@ -23,6 +28,6 @@ function validar(num){
             return num;
         }
         else{
-            return 'No funciona';
+            return 0;
         }
 }
