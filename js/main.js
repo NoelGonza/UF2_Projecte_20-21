@@ -11,6 +11,6 @@ function mostra_numeros(){
     num1 = document.getElementById("t1").value;
     num2 = document.getElementById("t2").value;
 
-    document.write("<p>"+ num1 +"</p>");
-    document.write("<p>"+ num2 +"</p>");
+    document.getElementById("num1").innerHTML = num1;
+    document.getElementById("num2").innerHTML = num2;
 }
