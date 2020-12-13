@@ -1,16 +1,16 @@
 let Partida = {
-    mida_tauler = 5,
-    mida_caselles_tauler = 25,
+    mida_tauler: 5,
+    mida_caselles_tauler: 25,
     tauler: [],
     zombis: [],
     estrelles: [],
 
-    inicialitzar_tauler: function(){
-        for (let i=0;i < this.mida_tauler; i++){
-            tauler[i]=[];
-            for(let j=0;j < tauler.length; j++){
-                /* tauler[i][j] = ; */
-                /* Inicialitza tauler */
+    inicialitzar_tauler: function(mida){
+        for (let i=0;i < mida; i++){
+            for(let j=0;j < mida; j++){
+                var div = document.createElement("div");
+			    div.id = i + "" + j;
+			    document.getElementById("tauler").appendChild(div);
             }
         }
     },
