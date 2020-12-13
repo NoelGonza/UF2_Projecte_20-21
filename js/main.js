@@ -7,13 +7,9 @@ window.onload = function(){
 
 document.getElementById("mostra").addEventListener("click", mostra_numeros);
 
-let num1;
-let num2;
 function mostra_numeros(){
-    num1 = document.getElementById("t1").value;
-    num2 = document.getElementById("t2").value;
-    num1 = validar(num1);
-    num2 = validar(num2);
+    let num1 = validar(document.getElementById("t1").value);
+    let num2 = validar(document.getElementById("t2").value);
     if (num1 == 0 || num2 == 0){
         alert("Els valors han de tenir un valor entre 5 i 20");
     }
@@ -24,10 +20,10 @@ function mostra_numeros(){
 }
 
 function validar(num){
-        if (num<=20 && num>=5){
-            return num;
-        }
-        else{
-            return 0;
-        }
+    if (num<=20 && num>=5){
+        return num;
+    }
+    else{
+        return 0;
+    }
 }

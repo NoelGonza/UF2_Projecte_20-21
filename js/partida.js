@@ -1,4 +1,4 @@
-let partida = {
+let Partida = {
     mida_tauler = 5,
     mida_caselles_tauler = 25,
     tauler: [],
@@ -19,7 +19,7 @@ let partida = {
 
     },
 
-    crear_estrellas: function(){
+    /* crear_estrellas: function(){
         let estrellas_creadas = 0;
         while (estrellas_creadas < 5) {
             let estrella = new Estrella();
@@ -28,20 +28,20 @@ let partida = {
             estrellas_creadas++;
             this.setPosicio(i,j);
         }
-    },
+    }, */
 
-    getPosicio: function(x,y){
+    /* getPosicio: function(x,y){
         return tauler[x][y];
     },
 
     setPosicio: function(valor,x,y){
         return tauler[x][y] = valor;
-    },
+    }, */
 
     iniciar: function(mida){
         this.mida_tauler = mida;
         this.mida_caselles_tauler = mida * mida;
         this.inicialitzar_tauler();
-        this.crear_estrellas();
+        /* this.crear_estrellas(); */
     }
 }
