@@ -5,21 +5,21 @@ let Partida = {
     zombis: [],
     estrelles: [],
 
-    inicialitzar_tauler: function(mida){
-        for (let i=0;i < mida; i++){
+    inicialitzar_tauler: function(ample,llarg){
+        for (let i=0;i < ample; i++){
             this.tauler[i]=["X"];
-            for(let j=0;j < mida; j++){
+            for(let j=0;j < llarg; j++){
                 this.tauler[i][j]=["X"];
             }
         }
     },
 
-    mostrar_tauler: function(){
+    mostrar_tauler: function(num1,num2){
         let tablero = "<table id='tau'>";
-        for (let i=0;i < 8; i++){
+        for (let i=0;i < num1; i++){
             tablero += "<tr id='"+i+"'>";
-            for(let j=0;j < 8; j++){
-                tablero += "<td id='"+j+"'>"+this.tauler[i][j]+"</td>";
+            for(let j=0;j < num2; j++){
+                tablero += "<td id='"+i+j+"'>"+this.tauler[i][j]+"</td>";
             }
             tablero +="</tr>";
         }
