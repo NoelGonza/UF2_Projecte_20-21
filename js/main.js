@@ -4,6 +4,7 @@ window.onload = function(){
     document.getElementById("estats").style.display = "none";
     /* document.getElementById("tauler").style.display = "none"; */
     Partida.inicialitzar_tauler(8);
+    Partida.mostrar_tauler();
 }
 
 document.getElementById("mostra").addEventListener("click", mostra_numeros);

@@ -7,16 +7,23 @@ let Partida = {
 
     inicialitzar_tauler: function(mida){
         for (let i=0;i < mida; i++){
+            this.tauler[i]=["X"];
             for(let j=0;j < mida; j++){
-                var div = document.createElement("div");
-			    div.id = i + "" + j;
-			    document.getElementById("tauler").appendChild(div);
+                this.tauler[i][j]=["X"];
             }
         }
     },
 
     mostrar_tauler: function(){
-
+        document.getElementById("tauler").innerHTML = "<table id='tau'>";
+        for (let i=0;i < 8; i++){
+            document.getElementById("tau").innerHTML = "<tr id='"+i+"'>";
+            for(let j=0;j < 8; j++){
+                document.getElementById(i).innerHTML = "<td id='"+j+"'>"+this.tauler[i][j]+"</td>";
+            }
+            document.innerHTML ="</tr>";
+        }
+        document.innerHTML = "</table>";
     },
 
     /* crear_estrellas: function(){
