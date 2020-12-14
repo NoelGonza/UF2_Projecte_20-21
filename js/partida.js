@@ -15,15 +15,16 @@ let Partida = {
     },
 
     mostrar_tauler: function(){
-        document.getElementById("tauler").innerHTML = "<table id='tau'>";
+        let tablero = "<table id='tau'>";
         for (let i=0;i < 8; i++){
-            document.getElementById("tau").innerHTML = "<tr id='"+i+"'>";
+            tablero += "<tr id='"+i+"'>";
             for(let j=0;j < 8; j++){
-                document.getElementById(i).innerHTML = "<td id='"+j+"'>"+this.tauler[i][j]+"</td>";
+                tablero += "<td id='"+j+"'>"+this.tauler[i][j]+"</td>";
             }
-            document.innerHTML ="</tr>";
+            tablero +="</tr>";
         }
-        document.innerHTML = "</table>";
+        tablero += "</table>";
+        document.getElementById("tauler").innerHTML = tablero;
     },
 
     /* crear_estrellas: function(){
