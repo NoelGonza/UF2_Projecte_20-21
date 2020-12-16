@@ -1,6 +1,6 @@
 let Partida = {
-    mida_tauler: 5,
-    mida_caselles_tauler: 25,
+    min_tauler: 5,
+    max_tauler: 20,
     tauler: [],
     zombis: [],
     estrelles: [],
@@ -50,10 +50,9 @@ let Partida = {
         return tauler[x][y] = valor;
     }, */
 
-    iniciar: function(mida){
-        this.mida_tauler = mida;
-        this.mida_caselles_tauler = mida * mida;
-        this.inicialitzar_tauler();
+    iniciar: function(mida1,mida2){
+        this.inicialitzar_tauler(mida1,mida2);
+        this.mostrar_tauler(mida1,mida2);
         /* this.crear_estrellas(); */
     }
 }

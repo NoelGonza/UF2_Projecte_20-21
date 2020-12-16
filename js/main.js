@@ -1,10 +1,6 @@
 window.onload = function(){
-    /* prompt("Mida del tauler? 5<->20")
-    partida.iniciar(mida); */
-    document.getElementById("estats").style.display = "none";
+    /* document.getElementById("estats").style.display = "none"; */
     /* document.getElementById("tauler").style.display = "none"; */
-    /* Partida.inicialitzar_tauler(8);
-    Partida.mostrar_tauler(); */
 }
 
 document.getElementById("mostra").addEventListener("click", mostra_numeros);
@@ -16,8 +12,7 @@ function mostra_numeros(){
         alert("Els valors han de tenir un valor entre 5 i 20");
     }
     else{
-        Partida.inicialitzar_tauler(num1,num2);
-        Partida.mostrar_tauler(num1,num2);
+        Partida.iniciar(num1,num2);
     }
 }
 
