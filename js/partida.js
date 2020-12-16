@@ -23,7 +23,7 @@ let Partida = {
             tablero += "<tr id='"+aux1+"'>";
             for(let j=0;j < num2; j++){
                 aux2 = abc[j];
-                tablero += "<td id='"+aux1+aux2+"'>"+this.tauler[i][j]+"</td>";
+                tablero += "<td id='"+aux1+aux2+"'><button id='"+i+j+"'>"+this.tauler[i][j]+"</button></td>";
             }
             tablero +="</tr>";
         }
