@@ -29,6 +29,9 @@ let Partida = {
         }
         tablero += "</table>";
         document.getElementById("tauler").innerHTML = tablero;
+        var prueba = new Zombi(0,19);
+        var wololo = prueba.PillaOcup();
+        console.log(wololo);
     },
 
     /* crear_estrellas: function(){
