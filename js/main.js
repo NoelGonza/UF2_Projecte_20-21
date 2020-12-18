@@ -4,6 +4,7 @@ window.onload = function(){
 }
 
 document.getElementById("mostra").addEventListener("click", mostra_numeros);
+/* document.getElementById("tauler").onclick(Partida.clicar_div(event)); */
 
 function mostra_numeros(){
     let num1 = validar(document.getElementById("t1").value);

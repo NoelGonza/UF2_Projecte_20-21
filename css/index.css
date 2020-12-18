@@ -3,12 +3,17 @@
     background-color:#224e2b;
     text-align: center;			
 }
-
-#pregunta button{
-    text-align: center;
+#tau{
+    display: table;
+}
+.pepe{
+    display: table-row;
+}
+.pope{
+    display: table-cell;
 }
 
-div button{
+div .pope{
     width: 50px;
     height: 50px;
     border: 1px solid black;
