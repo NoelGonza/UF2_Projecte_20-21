@@ -1,4 +1,4 @@
-var Recompensa = function(x, y, casella, id){
+var Recompensa = function(ocupa,pos1,estat){
     Element.apply(this, arguments);
 };
 

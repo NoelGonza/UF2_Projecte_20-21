@@ -1,4 +1,4 @@
-var Doblepunts = function(x, y, casella, id){
+var Doblepunts = function(ocupa,pos1,estat){
     Recompensa.apply(this, arguments);
 };
 

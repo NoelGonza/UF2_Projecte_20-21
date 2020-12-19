@@ -1,4 +1,4 @@
-var Vidaextra = function(x, y, casella, id){
+var Vidaextra = function(ocupa,pos1,estat){
     Recompensa.apply(this, arguments);
 };
 

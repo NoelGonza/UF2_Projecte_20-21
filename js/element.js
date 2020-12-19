@@ -1,16 +1,18 @@
-var Element = function(ocupa, pos1){
+var Element = function(ocupa, pos1,estat){
     this.ocupa = ocupa;
     this.pos1 = pos1;
-    estat = "g";
-    ocupa = 0;
+    this.estat = estat;
+
+    this.Puntuaciones = function(){
+        return puntuacio;
+    }
 
     this.ModificaArray = function(){
         return estat;
     }
 
     this.Descobert = function(){
-        estat = estat.toUpperCase();
-        return estat;
+        return estat.toUpperCase();;
     }
 
     this.PillaOcup = function(){
