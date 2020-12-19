@@ -53,23 +53,25 @@ let Partida = {
         }
         
     },
+
     crear_objetos: function(){
         
     },
 
     random_matriz: function(PosX,PosY){
-        PosX = Math.floor(Math.random()*(this.tauler.length));
-        PosY = Math.floor(Math.random()*(this.tauler.length));
-        console.log(PosX);
-        console.log(PosY);
         for(let i=0;i < 2;i++){
-        if(this.tauler[PosX][PosY] == this.zombis[i]){
-            console.log("No puedes")
-        }
-        else{
-        this.tauler[PosX][PosY] = new Zombi(null,PosY);
-        this.zombis.push(this.tauler[PosX][PosY]);
-        }
+            PosX = Math.floor(Math.random()*(this.tauler.length));
+            PosY = Math.floor(Math.random()*(this.tauler.length));
+            console.log(PosX);
+            console.log(PosY);
+            if(this.tauler[PosX][PosY] == this.zombis[i]){
+                console.log("No puedes")
+            }
+            else{
+            this.tauler[PosX][PosY] = new Zombi(null,PosY);
+            console.log(this.tauler);
+            this.zombis.push(this.tauler[PosX][PosY]);
+            }
         }
         console.log(this.zombis)
     },
@@ -97,7 +99,6 @@ let Partida = {
         this.max_tauler = mida1 * mida2;
         this.inicialitzar_tauler(mida1,mida2);
         this.mostrar_tauler(mida1,mida2);
-        this.random_matriz(mida1,mida2);
         this.random_matriz(mida1,mida2);
         console.log(this.tauler);
         this.insertar_valores();
