@@ -14,6 +14,7 @@ let Partida = {
         for (let i=0;i < ample; i++){
             this.tauler[i]=[];
             for(let j=0;j < llarg; j++){
+                //Definimos gespa i la guardamos en la array gespa i la añadimos en la array tauler tambien
                 var gespa1 = new Gespa(null, [i,j],"g",50);
                 this.gespa.push(gespa1);
                 var posicionar = gespa1.ModificaArray();
@@ -28,7 +29,7 @@ let Partida = {
         let tablero = "<div id='tau'>";
         for (let i=0;i < num1; i++){
             aux1 = abc[i];
-            tablero += "<div id='"+aux1+" class='pepe''>";
+            tablero += "<div id='"+aux1+"' class='pepe'>";
             for(let j=0;j < num2; j++){
                 aux2 = abc[j];
                 tablero += "<div id='"+aux1+aux2+"' class='pope'>"+this.tauler[i][j]+"</div>";
@@ -68,6 +69,7 @@ let Partida = {
                 console.log("No puedes")
             }
             else{
+                //definimos valores de zombie
                 var pivote = new Zombi(null, [PosX,PosY],"z",100);
                 this.zombis.push(pivote);
                 var cambia = pivote.ModificaArray();
@@ -80,6 +82,7 @@ let Partida = {
     },
 
     iniciar: function(mida1,mida2){
+        //Ponemos los valores de vida i puntos
         document.getElementById("vid").innerHTML = this.vidas;
         document.getElementById("punt").innerHTML = this.punts;
         ancho = mida1;
@@ -100,33 +103,47 @@ function busca_zombie(){
     let posY = document.getElementById("z2").value;
     if (Partida.tauler[posX][posY] == "z"){
         for (let i=0; i < Partida.zombis.length; i++) {
+            //Restamos una vida cada vez que se ejecuta este if porque emos encontrado un zombie
             if(Partida.zombis[i].pos1[0] == posX && Partida.zombis[i].pos1[1] == posY){
                 Partida.tauler[posX][posY] = Partida.zombis[i].Descobert();
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                 Partida.vidas--;
-                console.log(Partida.vidas)
                 document.getElementById("vid").innerHTML = Partida.vidas;
+                //Si los puntos son mas grandes o igual a 100 le restamos los 100 que estan definidos en zombie
                 if(Partida.punts >= 100){
                     Partida.punts = Partida.punts - Partida.zombis[i].Puntuaciones();
                     document.getElementById("punt").innerHTML = Partida.punts;
                 }
+                //Si no le ponemos 0 porque quedaria negativo si restamos a -100 si es mas pequeño
                 else{
                     Partida.punts = 0;
                     document.getElementById("punt").innerHTML = Partida.punts;
                 }
+                //Si las vidas llegan a 0 pierdes
                 if(Partida.vidas == 0){
                     alert("Has perdido wey :(");
                 }
             }
         }
     }
+    //Else if de gespa que si la encuentra la canvia a mayus i suma 50 puntos a puntuacion
     else if (Partida.tauler[posX][posY] == "g"){
         for (let i=0; i < Partida.gespa.length; i++){
             if(Partida.gespa[i].pos1[0] == posX && Partida.gespa[i].pos1[1] == posY){
                 Partida.tauler[posX][posY] = Partida.gespa[i].Descobert();
-                console.log(Partida.gespa[i].Descobert())
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                 Partida.punts = Partida.punts + Partida.gespa[i].Puntuaciones();
+                document.getElementById("punt").innerHTML = Partida.punts;
+            }
+        }
+    }
+    //Else if para mas adelante buscar si es una estrella al crearla hay que retocar
+    else if (Partida.tauler[posX][posY] == "e"){
+        for (let i=0; i < Partida.estrelles.length; i++){
+            if(Partida.estrelles[i].pos1[0] == posX && Partida.estrelles[i].pos1[1] == posY){
+                Partida.tauler[posX][posY] = Partida.estrelles[i].Descobert();
+                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                Partida.punts = Partida.punts + Partida.estrelles[i].Puntuaciones();
                 document.getElementById("punt").innerHTML = Partida.punts;
             }
         }

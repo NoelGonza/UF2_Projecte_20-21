@@ -1,7 +1,6 @@
-var Estrella = function(ocupa,pos1,estat){
+//Clase estrella para saber que es estrella
+var Estrella = function(){
     Element.apply(this, arguments);
-    estat = "e";
-    puntuacio = 200;
 };
 
 Estrella.prototype = Object.create(Element.prototype);

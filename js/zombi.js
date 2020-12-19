@@ -1,7 +1,6 @@
-var Zombi = function(ocupa,pos1,estat){
+//Clase zombi para saber que es zombi
+var Zombi = function(){
     Element.apply(this, arguments);
-    estat = "z";
-    puntuacio = 100;
 };
 
 Zombi.prototype = Object.create(Element.prototype);

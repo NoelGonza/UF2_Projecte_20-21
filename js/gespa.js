@@ -1,7 +1,6 @@
-var Gespa = function(ocupa,pos1,estat,puntuacio){
+//Clase gespa para saber que es gespa
+var Gespa = function(){
     Element.apply(this, arguments);
-    estat = "g";
-    puntuacio = 50;
 };
 
 Gespa.prototype = Object.create(Element.prototype);

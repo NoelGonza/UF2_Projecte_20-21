@@ -1,4 +1,4 @@
-var Meitatzombi = function(ocupa,pos1,estat){
+var Meitatzombi = function(){
     Recompensa.apply(this, arguments);
 };
 
