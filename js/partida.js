@@ -6,10 +6,12 @@ let Partida = {
     estrelles: [],
 
     inicialitzar_tauler: function(ample,llarg){
+        var gespa = new Element(null, null);
+        var posicionar = gespa.ModificaArray();
         for (let i=0;i < ample; i++){
-            this.tauler[i]=["X"];
+            this.tauler[i]=[];
             for(let j=0;j < llarg; j++){
-                this.tauler[i][j]=["X"];
+                this.tauler[i][j]=posicionar;
             }
         }
     },
@@ -68,9 +70,12 @@ let Partida = {
                 console.log("No puedes")
             }
             else{
-            this.tauler[PosX][PosY] = new Zombi(null,PosY);
-            console.log(this.tauler);
-            this.zombis.push(this.tauler[PosX][PosY]);
+                var pivote = new Zombi(null, [PosX,PosY]);
+                this.zombis.push(pivote);
+                var cambia = pivote.ModificaArray();
+                this.tauler[PosX][PosY] = cambia;
+                console.log(this.zambis);
+                console.log(this.tauler);
             }
         }
         console.log(this.zombis)
@@ -102,7 +107,20 @@ let Partida = {
         this.random_matriz(mida1,mida2);
         console.log(this.tauler);
         this.insertar_valores();
-        
         /* this.crear_estrellas(); */
+    }
+}
+
+document.getElementById("busca").addEventListener("click", busca_zombie);
+
+function busca_zombie(){
+    let posX = document.getElementById("z1").value;
+    let posY = document.getElementById("z2").value;
+    if (Partida.tauler[posX][posY] == "z"){
+        for (const [] of Partida.zombies) {
+            console.log(value);
+        }
+        /*Partida.tauler[posX][posY] = "Z";
+        console.log(Partida.tauler);*/
     }
 }
