@@ -53,6 +53,9 @@ let Partida = {
         }
         
     },
+    crear_objetos: function(){
+        
+    },
 
     random_matriz: function(PosX,PosY){
         PosX = Math.floor(Math.random()*(this.tauler.length));
