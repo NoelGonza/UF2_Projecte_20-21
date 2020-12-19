@@ -4,6 +4,8 @@ let Partida = {
     tauler: [],
     zombis: [],
     estrelles: [],
+    ancho: 0,
+    largo: 0,
 
     inicialitzar_tauler: function(ample,llarg){
         var gespa = new Element(null, null);
@@ -101,6 +103,8 @@ let Partida = {
     }, */
 
     iniciar: function(mida1,mida2){
+        ancho = mida1;
+        largo = mida2;
         this.max_tauler = mida1 * mida2;
         this.inicialitzar_tauler(mida1,mida2);
         this.mostrar_tauler(mida1,mida2);
@@ -117,8 +121,11 @@ function busca_zombie(){
     let posX = document.getElementById("z1").value;
     let posY = document.getElementById("z2").value;
     if (Partida.tauler[posX][posY] == "z"){
-        for (const [] of Partida.zombies) {
-            console.log(value);
+        for (i=0; i < Partida.zombis.length; i++) {
+            if(Partida.zombis[i].pos1[0] == posX && Partida.zombis[i].pos1[1] == posY){
+                Partida.tauler[posX][posY] = Partida.zombis[i].Descobert();
+                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+            }
         }
         /*Partida.tauler[posX][posY] = "Z";
         console.log(Partida.tauler);*/
