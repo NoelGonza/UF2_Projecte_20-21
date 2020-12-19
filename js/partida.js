@@ -28,7 +28,7 @@ let Partida = {
             tablero +="</div>";
         }
         tablero += "</div>";
-        document.getElementById("tauler").innerHTML = tablero;
+        document.getElementById("tablero").innerHTML = tablero;
         /* this.zombis = new Zombi(1,1);
         var wololo = this.zombis.PillaPos();
         console.log(wololo);
@@ -44,9 +44,14 @@ let Partida = {
     },
 
     insertar_valores: function(){
+        let valor = Math.floor(this.max_tauler / 4)
+        console.log(valor)
         for(let i=0;i<this.tauler.length;i++){
-            
+            for(let j=0;j<this.tauler.length;j++){
+                console.log(this.tauler[i][j] == this.zombis[1])
+            }
         }
+        
     },
 
     random_matriz: function(PosX,PosY){
@@ -55,6 +60,8 @@ let Partida = {
         console.log(PosX);
         console.log(PosY);
         this.tauler[PosX][PosY] = new Zombi(null,PosY);
+        this.zombis.push(this.tauler[PosX][PosY]);
+        console.log(this.zombis)
     },
 
     /* crear_estrellas: function(){
@@ -77,10 +84,14 @@ let Partida = {
     }, */
 
     iniciar: function(mida1,mida2){
+        this.max_tauler = mida1 * mida2;
         this.inicialitzar_tauler(mida1,mida2);
         this.mostrar_tauler(mida1,mida2);
         this.random_matriz(mida1,mida2);
+        this.random_matriz(mida1,mida2);
         console.log(this.tauler);
+        this.insertar_valores();
+        
         /* this.crear_estrellas(); */
     }
 }
