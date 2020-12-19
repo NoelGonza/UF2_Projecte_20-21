@@ -1,4 +1,4 @@
-var Gespa = function(ocupa,pos1,estat){
+var Gespa = function(ocupa,pos1,estat,puntuacio){
     Element.apply(this, arguments);
     estat = "g";
     puntuacio = 50;

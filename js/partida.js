@@ -14,7 +14,7 @@ let Partida = {
         for (let i=0;i < ample; i++){
             this.tauler[i]=[];
             for(let j=0;j < llarg; j++){
-                var gespa1 = new Gespa(null, [i,j],"g");
+                var gespa1 = new Gespa(null, [i,j],"g",50);
                 this.gespa.push(gespa1);
                 var posicionar = gespa1.ModificaArray();
                 this.tauler[i][j]=posicionar;
@@ -68,7 +68,7 @@ let Partida = {
                 console.log("No puedes")
             }
             else{
-                var pivote = new Zombi(null, [PosX,PosY],"z");
+                var pivote = new Zombi(null, [PosX,PosY],"z",100);
                 this.zombis.push(pivote);
                 var cambia = pivote.ModificaArray();
                 this.tauler[PosX][PosY] = cambia;
@@ -110,6 +110,10 @@ function busca_zombie(){
                     Partida.punts = Partida.punts - Partida.zombis[i].Puntuaciones();
                     document.getElementById("punt").innerHTML = Partida.punts;
                 }
+                else{
+                    Partida.punts = 0;
+                    document.getElementById("punt").innerHTML = Partida.punts;
+                }
                 if(Partida.vidas == 0){
                     alert("Has perdido wey :(");
                 }
@@ -122,6 +126,8 @@ function busca_zombie(){
                 Partida.tauler[posX][posY] = Partida.gespa[i].Descobert();
                 console.log(Partida.gespa[i].Descobert())
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                Partida.punts = Partida.punts + Partida.gespa[i].Puntuaciones();
+                document.getElementById("punt").innerHTML = Partida.punts;
             }
         }
     }
