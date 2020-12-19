@@ -59,8 +59,15 @@ let Partida = {
         PosY = Math.floor(Math.random()*(this.tauler.length));
         console.log(PosX);
         console.log(PosY);
+        for(let i=0;i < 2;i++){
+        if(this.tauler[PosX][PosY] == this.zombis[i]){
+            console.log("No puedes")
+        }
+        else{
         this.tauler[PosX][PosY] = new Zombi(null,PosY);
         this.zombis.push(this.tauler[PosX][PosY]);
+        }
+        }
         console.log(this.zombis)
     },
 
