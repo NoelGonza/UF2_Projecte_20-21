@@ -1,10 +1,10 @@
 let Partida = {
-    min_tauler: 5,
-    max_tauler: 25,
     tauler: [],
     zombis: [],
     estrelles: [],
     gespa: [],
+    doble: [],
+    meitat: [],
     vidas: 3,
     punts: 0,
     victoria: 0,
@@ -57,8 +57,12 @@ let Partida = {
     crear_objetos: function(mida1, mida2){
         porcentaje = Math.round((mida1 * mida2)/4);
         estrellas = Math.round((parseInt(mida1)+parseInt(mida2))/2);
+        Doblep = 1;
+        Meitatz = 2;
         this.crear_zombies(mida1,mida2,porcentaje);
         this.crear_estrellas(mida1,mida2,estrellas);
+        this.crear_DoblePuntuacion(mida1,mida2,Doblep);
+        this.crear_Meitat(mida1,mida2,Meitatz);
     },
 
     crear_zombies: function(PosX,PosY,Por25){
@@ -70,14 +74,11 @@ let Partida = {
                 console.log(PosY);
             }
             while (this.tauler[PosX][PosY] != "g");
-            
             var pivote = new Zombi(null, [PosX,PosY],"z",100);
             this.zombis.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
         }
-        console.log(this.zombis);
-        console.log(this.tauler);
     },
 
     crear_estrellas: function(PosX,PosY,Por25){
@@ -89,14 +90,43 @@ let Partida = {
                 console.log(PosY);
             }
             while (this.tauler[PosX][PosY] != "g");
-            
             var pivote = new Estrella(null, [PosX,PosY],"e",200);
             this.estrelles.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
         }
-        console.log(this.estrelles);
-        console.log(this.tauler);
+    },
+
+    crear_DoblePuntuacion: function(PosX,PosY,Por25){
+        for (let i=0;i < Por25;i++){
+            do{
+                PosX = Math.floor(Math.random()*(this.tauler.length));
+                PosY = Math.floor(Math.random()*(this.tauler[0].length));
+                console.log(PosX);
+                console.log(PosY);
+            }
+            while (this.tauler[PosX][PosY] != "g");
+            var pivote = new Doblepunts(null, [PosX,PosY],"d",null);
+            this.doble.push(pivote);
+            var cambia = pivote.ModificaArray();
+            this.tauler[PosX][PosY] = cambia;
+        }
+    },
+
+    crear_Meitat: function(PosX,PosY,Por25){
+        for (let i=0;i < Por25;i++){
+            do{
+                PosX = Math.floor(Math.random()*(this.tauler.length));
+                PosY = Math.floor(Math.random()*(this.tauler[0].length));
+                console.log(PosX);
+                console.log(PosY);
+            }
+            while (this.tauler[PosX][PosY] != "g");
+            var pivote = new Meitatzombi(null, [PosX,PosY],"m",null);
+            this.meitat.push(pivote);
+            var cambia = pivote.ModificaArray();
+            this.tauler[PosX][PosY] = cambia;
+        }
     },
 
     iniciar: function(mida1,mida2){
@@ -153,7 +183,7 @@ function buscar_obj(){
             }
         }
     }
-    //Else if para mas adelante buscar si es una estrella al crearla hay que retocar
+    //Else if para buscar si es una estrella i sumar 200 puntos i si consigues todas ganas la partida
     else if (Partida.tauler[posX][posY] == "e"){
         let ganar = Partida.estrelles.length;
         for (let i=0; i < Partida.estrelles.length; i++){
@@ -167,6 +197,34 @@ function buscar_obj(){
         }
         if (Partida.victoria == ganar){
             alert("Has ganado mi niño");
+        }
+    }
+    //Else if para si encuentras doblar los puntos se doblen.
+    else if (Partida.tauler[posX][posY] == "d"){
+        if (Partida.doble[0].pos1[0] == posX && Partida.doble[0].pos1[1] == posY){
+            Partida.tauler[posX][posY] = Partida.doble[0].Descobert();
+            Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+            Partida.punts = Partida.doble[0].Doblar();
+            console.log(Partida.punts)
+            document.getElementById("punt").innerHTML = Partida.punts;
+        }
+    }
+    //Else if para si encuentras todos meitat zombis se hagan a la mitat.
+    else if (Partida.tauler[posX][posY] == "m"){
+        for (let i=0; i < Partida.meitat.length; i++){
+            if (Partida.meitat[i].pos1[0] == posX && Partida.meitat[i].pos1[1] == posY){
+                Partida.tauler[posX][posY] = Partida.meitat[i].Descobert();
+                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                if (Partida.meitat.length == 2){
+                    alert("Se pusieron a la mitat los zombis");
+                    for(let i=0;i > Math.floor(Partida.zombis.length/2);i++){
+                        let r = Math.floor(Math.random()*(this.zombis.length));
+                        let pep = this.zombis[r];
+                        this.Partida.tauler[pep.pos1[0]][pep.pos1[1]] = this.gespa[pep.pos1[0]][pep.pos1[1]];
+                        Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                    }
+                }
+            }
         }
     }
 }
