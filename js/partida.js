@@ -8,6 +8,7 @@ let Partida = {
     vidas: 3,
     punts: 0,
     victoria: 0,
+    contador_mei: 0,
 
     inicialitzar_tauler: function(ample,llarg){
         for (let i=0;i < ample; i++){
@@ -151,7 +152,7 @@ function buscar_obj(){
         for (let i=0; i < Partida.zombis.length; i++) {
             //Restamos una vida cada vez que se ejecuta este if porque emos encontrado un zombie
             if (Partida.zombis[i].pos1[0] == posX && Partida.zombis[i].pos1[1] == posY){
-                Partida.tauler[posX][posY] = Partida.zombis[i].Descobert();
+                Partida.tauler[posX][posY] = Partida.zombis[i].Descobert(Partida.zombis[i]);
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                 Partida.vidas--;
                 document.getElementById("vid").innerHTML = Partida.vidas;
@@ -176,7 +177,7 @@ function buscar_obj(){
     else if (Partida.tauler[posX][posY] == "g"){
         for (let i=0; i < Partida.gespa.length; i++){
             if (Partida.gespa[i].pos1[0] == posX && Partida.gespa[i].pos1[1] == posY){
-                Partida.tauler[posX][posY] = Partida.gespa[i].Descobert();
+                Partida.tauler[posX][posY] = Partida.gespa[i].Descobert(Partida.gespa[i]);
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                 Partida.punts = Partida.punts + Partida.gespa[i].Puntuaciones();
                 document.getElementById("punt").innerHTML = Partida.punts;
@@ -188,7 +189,7 @@ function buscar_obj(){
         let ganar = Partida.estrelles.length;
         for (let i=0; i < Partida.estrelles.length; i++){
             if (Partida.estrelles[i].pos1[0] == posX && Partida.estrelles[i].pos1[1] == posY){
-                Partida.tauler[posX][posY] = Partida.estrelles[i].Descobert();
+                Partida.tauler[posX][posY] = Partida.estrelles[i].Descobert(Partida.estrelles[i]);
                 Partida.victoria++;
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                 Partida.punts = Partida.punts + Partida.estrelles[i].Puntuaciones();
@@ -202,7 +203,7 @@ function buscar_obj(){
     //Else if para si encuentras doblar los puntos se doblen.
     else if (Partida.tauler[posX][posY] == "d"){
         if (Partida.doble[0].pos1[0] == posX && Partida.doble[0].pos1[1] == posY){
-            Partida.tauler[posX][posY] = Partida.doble[0].Descobert();
+            Partida.tauler[posX][posY] = Partida.doble[0].Descobert(Partida.doble[i]);
             Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
             Partida.punts = Partida.doble[0].Doblar();
             console.log(Partida.punts)
@@ -213,16 +214,26 @@ function buscar_obj(){
     else if (Partida.tauler[posX][posY] == "m"){
         for (let i=0; i < Partida.meitat.length; i++){
             if (Partida.meitat[i].pos1[0] == posX && Partida.meitat[i].pos1[1] == posY){
-                Partida.tauler[posX][posY] = Partida.meitat[i].Descobert();
+                Partida.tauler[posX][posY] = Partida.meitat[i].Descobert(Partida.meitat[i]);
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                if (Partida.meitat.length == 2){
-                    alert("Se pusieron a la mitat los zombis");
-                    for(let i=0;i > Math.floor(Partida.zombis.length/2);i++){
-                        let r = Math.floor(Math.random()*(this.zombis.length));
-                        let pep = this.zombis[r];
-                        this.Partida.tauler[pep.pos1[0]][pep.pos1[1]] = this.gespa[pep.pos1[0]][pep.pos1[1]];
+                Partida.contador_mei++;
+                if (Partida.contador_mei == 2){
+                    contador_z = [];
+                    for(let i=0;i < Partida.zombis.length;i++){
+                        console.log(Partida.zombis);
+                        let zz = Partida.zombis[i];
+                        if (zz.estat == "z"){
+                            contador_z.push(zz);
+                        }
+                    }
+                    for(let i=0;i < Math.floor(contador_z.length/2);i++){
+                        console.log(contador_z.length);
+                        let r = Math.floor(Math.random()*(contador_z.length));
+                        let pep = contador_z[r];
+                        Partida.tauler[pep.pos1[0]][pep.pos1[1]] = "g";
                         Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                     }
+                    alert("Se pusieron a la mitat los zombis");
                 }
             }
         }

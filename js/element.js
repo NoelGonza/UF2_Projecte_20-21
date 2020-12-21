@@ -15,8 +15,9 @@ var Element = function(ocupa, pos1,estat,puntuacio){
         return estat;
     }
 
-    this.Descobert = function(){
-        return estat.toUpperCase();
+    this.Descobert = function(objetoz){
+        objetoz.estat = estat.toUpperCase();
+        return objetoz.estat;
     }
 
     this.PillaOcup = function(){
