@@ -1,5 +1,6 @@
 let Partida = {
     tauler: [],
+    tauler2: [],
     zombis: [],
     estrelles: [],
     gespa: [],
@@ -15,12 +16,15 @@ let Partida = {
     inicialitzar_tauler: function(ample,llarg){
         for (let i=0;i < ample; i++){
             this.tauler[i]=[];
+            this.tauler2[i]=[];
             for (let j=0;j < llarg; j++){
                 //Definimos gespa i la guardamos en la array gespa i la añadimos en la array tauler tambien
-                var gespa1 = new Gespa(null, [i,j],"g",50);
+                var gespa1 = new Gespa(null, [i,j],"g",50,"<img src='img/gespa.png'>");
                 this.gespa.push(gespa1);
                 var posicionar = gespa1.ModificaArray();
                 this.tauler[i][j]=posicionar;
+                var imagen = gespa1.MuestraIMG();
+                this.tauler2[i][j]=imagen;
             }
         }
     },
@@ -34,7 +38,7 @@ let Partida = {
             tablero += "<div id='"+aux1+"' class='pepe'>";
             for (let j=0;j < num2; j++){
                 aux2 = abc[j];
-                tablero += "<div id='"+aux1+aux2+"' class='pope'>"+this.tauler[i][j]+"</div>";
+                tablero += "<div id='"+aux1+aux2+"' class='pope'>"+this.tauler2[i][j]+"</div>";
             }
             tablero +="</div>";
         }
@@ -77,7 +81,7 @@ let Partida = {
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
             }
             while (this.tauler[PosX][PosY] != "g");
-            var pivote = new Zombi(null, [PosX,PosY],"z",100);
+            var pivote = new Zombi(null, [PosX,PosY],"z",100,"<img src='img/zombie3.png'>");
             this.zombis.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
@@ -165,7 +169,8 @@ function buscar_obj(){
             //Restamos una vida cada vez que se ejecuta este if porque emos encontrado un zombie
             if (Partida.zombis[i].pos1[0] == posX && Partida.zombis[i].pos1[1] == posY){
                 Partida.tauler[posX][posY] = Partida.zombis[i].Descobert(Partida.zombis[i]);
-                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                Partida.tauler2[posX][posY] = Partida.zombis[i].MuestraIMG(Partida.zombis[i]);
+                Partida.mostrar_tauler(Partida.tauler2.length,Partida.tauler2[0].length);
                 Partida.vidas--;
                 document.getElementById("vid").innerHTML = Partida.vidas;
                 //Si los puntos son mas grandes o igual a 100 le restamos los 100 que estan definidos en zombie
