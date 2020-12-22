@@ -5,10 +5,12 @@ let Partida = {
     gespa: [],
     doble: [],
     meitat: [],
+    vidaex: [],
     vidas: 3,
     punts: 0,
     victoria: 0,
     contador_mei: 0,
+    contador_vid: 0,
 
     inicialitzar_tauler: function(ample,llarg){
         for (let i=0;i < ample; i++){
@@ -60,10 +62,12 @@ let Partida = {
         estrellas = Math.round((parseInt(mida1)+parseInt(mida2))/2);
         Doblep = 1;
         Meitatz = 2;
+        Vidaext = 3;
         this.crear_zombies(mida1,mida2,porcentaje);
         this.crear_estrellas(mida1,mida2,estrellas);
         this.crear_DoblePuntuacion(mida1,mida2,Doblep);
         this.crear_Meitat(mida1,mida2,Meitatz);
+        this.crear_VidaExtra(mida1,mida2,Vidaext);
     },
 
     crear_zombies: function(PosX,PosY,Por25){
@@ -71,8 +75,6 @@ let Partida = {
             do{
                 PosX = Math.floor(Math.random()*(this.tauler.length));
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
-                console.log(PosX);
-                console.log(PosY);
             }
             while (this.tauler[PosX][PosY] != "g");
             var pivote = new Zombi(null, [PosX,PosY],"z",100);
@@ -87,8 +89,6 @@ let Partida = {
             do{
                 PosX = Math.floor(Math.random()*(this.tauler.length));
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
-                console.log(PosX);
-                console.log(PosY);
             }
             while (this.tauler[PosX][PosY] != "g");
             var pivote = new Estrella(null, [PosX,PosY],"e",200);
@@ -103,8 +103,6 @@ let Partida = {
             do{
                 PosX = Math.floor(Math.random()*(this.tauler.length));
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
-                console.log(PosX);
-                console.log(PosY);
             }
             while (this.tauler[PosX][PosY] != "g");
             var pivote = new Doblepunts(null, [PosX,PosY],"d",null);
@@ -119,12 +117,26 @@ let Partida = {
             do{
                 PosX = Math.floor(Math.random()*(this.tauler.length));
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
-                console.log(PosX);
-                console.log(PosY);
             }
             while (this.tauler[PosX][PosY] != "g");
             var pivote = new Meitatzombi(null, [PosX,PosY],"m",null);
             this.meitat.push(pivote);
+            var cambia = pivote.ModificaArray();
+            this.tauler[PosX][PosY] = cambia;
+        }
+    },
+
+    crear_VidaExtra: function(PosX,PosY,Por25){
+        for (let i=0;i < Por25;i++){
+            do{
+                PosX = Math.floor(Math.random()*(this.tauler.length));
+                PosY = Math.floor(Math.random()*(this.tauler[0].length));
+                console.log(PosX);
+                console.log(PosY);
+            }
+            while (this.tauler[PosX][PosY] != "g");
+            var pivote = new Vidaextra(null, [PosX,PosY],"v",null);
+            this.vidaex.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
         }
@@ -234,6 +246,22 @@ function buscar_obj(){
                         Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                     }
                     alert("Se pusieron a la mitat los zombis");
+                }
+            }
+        }
+    }
+    //Else if para si encuentras todos vidaextra sumen una vida mas.
+    else if (Partida.tauler[posX][posY] == "v"){
+        for (let i=0; i < Partida.vidaex.length; i++){
+            if (Partida.vidaex[i].pos1[0] == posX && Partida.vidaex[i].pos1[1] == posY){
+                Partida.tauler[posX][posY] = Partida.vidaex[i].Descobert(Partida.vidaex[i]);
+                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                Partida.contador_vid++;
+                console.log(Partida.contador_vid)
+                if(Partida.contador_vid == 3){
+                    Partida.vidaex[i].Sumarvida();
+                    document.getElementById("vid").innerHTML = Partida.vidas;
+                    Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                 }
             }
         }
