@@ -129,17 +129,35 @@ let Partida = {
     },
 
     crear_Meitat: function(PosX,PosY,Por25){
+        let direccion = 1;
+        direccion = Math.floor((Math.random() * 2) + 1);
+        if (direccion = 1){
+            do{
+                PosX = Math.floor(Math.random()*(this.tauler.length));
+                PosY = Math.floor(Math.random()*(this.tauler[0].length-1));
+            }
+            while (this.tauler[PosX][PosY] != "g" && this.tauler[PosX][PosY+1] != "g");
+            var pivote = new Meitatzombi([PosX,PosY+1], [PosX,PosY],"m",null,"<img src='img/meitatz.png'>");
+            console.log(pivote);
+            this.meitat.push(pivote);
+            var cambia = pivote.ModificaArray();
+            this.tauler[PosX][PosY] = cambia;
+            this.tauler[PosX][PosY+1] = cambia;
+        }
+        /*else{
+
+        }
         for (let i=0;i < Por25;i++){
             do{
                 PosX = Math.floor(Math.random()*(this.tauler.length));
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
             }
-            while (this.tauler[PosX][PosY] != "g");
-            var pivote = new Meitatzombi(null, [PosX,PosY],"m",null,"<img src='img/meitatz.png'>");
+            while (this.tauler[PosX][PosY] != "g" && this.tauler[PosX][PosY+1] != "g");
+            var pivote = new Meitatzombi([],null, [PosX,PosY],"m",null,"<img src='img/meitatz.png'>");
             this.meitat.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
-        }
+        }*/
     },
 
     crear_VidaExtra: function(PosX,PosY,Por25){
@@ -248,6 +266,30 @@ function buscar_obj(){
     else if (Partida.tauler[posX][posY] == "m"){
         for (let i=0; i < Partida.meitat.length; i++){
             if (Partida.meitat[i].pos1[0] == posX && Partida.meitat[i].pos1[1] == posY){
+                Partida.tauler[posX][posY] = Partida.meitat[i].Descobert(Partida.meitat[i]);
+                Partida.tauler2[posX][posY] = Partida.meitat[i].MuestraIMG(Partida.meitat[i]);
+                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                Partida.contador_mei++;
+                if (Partida.contador_mei == 2){
+                    contador_z = [];
+                    for(let i=0;i < Partida.zombis.length;i++){
+                        console.log(Partida.zombis);
+                        let zz = Partida.zombis[i];
+                        if (zz.estat == "z"){
+                            contador_z.push(zz);
+                        }
+                    }
+                    for(let i=0;i < Math.floor(contador_z.length/2);i++){
+                        console.log(contador_z.length);
+                        let r = Math.floor(Math.random()*(contador_z.length));
+                        let pep = contador_z[r];
+                        Partida.tauler[pep.pos1[0]][pep.pos1[1]] = "g";
+                        Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                    }
+                    alert("Se pusieron a la mitat los zombis");
+                }
+            }
+            if (Partida.meitat[i].pos2[0] == posX && Partida.meitat[i].pos2[1] == posY){
                 Partida.tauler[posX][posY] = Partida.meitat[i].Descobert(Partida.meitat[i]);
                 Partida.tauler2[posX][posY] = Partida.meitat[i].MuestraIMG(Partida.meitat[i]);
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
