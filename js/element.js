@@ -1,8 +1,9 @@
 //Definimos donde se guardan todas las variables en el padre i las funciones
 //Las variables las ponemos a la hora de crear el objeto
-var Element = function(pos2,pos1,estat,puntuacio,img){
-    this.pos1 = pos1;
+var Element = function(pos3,pos2,pos1,estat,puntuacio,img){
+    this.pos3 = pos3;
     this.pos2 = pos2;
+    this.pos1 = pos1;
     this.estat = estat;
     this.puntuacio = puntuacio;
     
@@ -18,10 +19,6 @@ var Element = function(pos2,pos1,estat,puntuacio,img){
     this.Descobert = function(objetoz){
         objetoz.estat = estat.toUpperCase();
         return objetoz.estat;
-    }
-
-    this.PillaOcup = function(){
-        return ocupa;
     }
         
     this.PillaPos = function(){

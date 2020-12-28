@@ -18,7 +18,7 @@ let Partida = {
             this.tauler2[i]=[];
             for (let j=0;j < llarg; j++){
                 //Definimos gespa i la guardamos en la array gespa i la añadimos en la array tauler tambien
-                var gespa1 = new Gespa(null, [i,j],"g",50,"<img src='img/gespa.png'>");
+                var gespa1 = new Gespa(null,null, [i,j],"g",50,"<img src='img/gespa.png'>");
                 this.gespa.push(gespa1);
                 var posicionar = gespa1.ModificaArray();
                 this.tauler[i][j]=posicionar;
@@ -92,7 +92,7 @@ let Partida = {
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
             }
             while (this.tauler[PosX][PosY] != "g");
-            var pivote = new Zombi(null, [PosX,PosY],"z",100,"<img src='img/zombi1.png'>");
+            var pivote = new Zombi(null,null, [PosX,PosY],"z",100,"<img src='img/zombi1.png'>");
             this.zombis.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
@@ -106,7 +106,7 @@ let Partida = {
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
             }
             while (this.tauler[PosX][PosY] != "g");
-            var pivote = new Estrella(null, [PosX,PosY],"e",200,"<img src='img/estrella.png'>");
+            var pivote = new Estrella(null,null, [PosX,PosY],"e",200,"<img src='img/estrella.png'>");
             this.estrelles.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
@@ -120,7 +120,7 @@ let Partida = {
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
             }
             while (this.tauler[PosX][PosY] != "g");
-            var pivote = new Doblepunts(null, [PosX,PosY],"d",null,"<img src='img/doble.png'>");
+            var pivote = new Doblepunts(null,null,[PosX,PosY],"d",null,"<img src='img/doble.png'>");
             this.doble.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
@@ -137,7 +137,7 @@ let Partida = {
                 PosY = Math.floor(Math.random()*(this.tauler[0].length-1));
             }
             while (this.tauler[PosX][PosY] != "g" && this.tauler[PosX][PosY+1] != "g");
-            var pivote = new Meitatzombi([PosX,PosY+1], [PosX,PosY],"m",null,"<img src='img/meitatz.png'>");
+            var pivote = new Meitatzombi(null,[PosX,PosY+1], [PosX,PosY],"m",null,"<img src='img/meitatz.png'>");
             console.log(pivote);
             this.meitat.push(pivote);
             var cambia = pivote.ModificaArray();
@@ -152,7 +152,7 @@ let Partida = {
                 console.log(PosY);
             }
             while (this.tauler[PosX][PosY] != "g" && this.tauler[PosX+1][PosY] != "g");
-            var pivote = new Meitatzombi([PosX+1,PosY], [PosX,PosY],"m",null,"<img src='img/meitatz.png'>");
+            var pivote = new Meitatzombi(null,[PosX+1,PosY], [PosX,PosY],"m",null,"<img src='img/meitatz.png'>");
             console.log(pivote);
             this.meitat.push(pivote);
             var cambia = pivote.ModificaArray();
@@ -170,7 +170,7 @@ let Partida = {
                 console.log(PosY);
             }
             while (this.tauler[PosX][PosY] != "g");
-            var pivote = new Vidaextra(null, [PosX,PosY],"v",null,"<img src='img/vida.png'>");
+            var pivote = new Vidaextra(null,null, [PosX,PosY],"v",null,"<img src='img/vida.png'>");
             this.vidaex.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
