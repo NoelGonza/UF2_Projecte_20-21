@@ -64,14 +64,26 @@ let Partida = {
     crear_objetos: function(mida1, mida2){
         porcentaje = Math.round((mida1 * mida2)/4);
         estrellas = Math.round((parseInt(mida1)+parseInt(mida2))/2);
-        Doblep = 1;
-        Meitatz = 2;
-        Vidaext = 3;
+        this.crear_Recompensas(mida1,mida2,porcentaje);
         this.crear_zombies(mida1,mida2,porcentaje);
-        this.crear_estrellas(mida1,mida2,estrellas);
-        this.crear_DoblePuntuacion(mida1,mida2,Doblep);
-        this.crear_Meitat(mida1,mida2,Meitatz);
-        this.crear_VidaExtra(mida1,mida2,Vidaext);
+        this.crear_estrellas(mida1,mida2,estrellas);       
+    },
+
+    crear_Recompensas: function(PosX,PosY,Por25){
+        do{
+            if(Por25 >= 3){
+                this.crear_VidaExtra(PosX,PosY,3);
+                Por25 = Por25 - 3;
+            }
+            if(Por25 >= 2){
+                this.crear_Meitat(PosX,PosY,2);
+                Por25 = Por25 - 2;
+            }
+            if(Por25 >= 1){
+                this.crear_DoblePuntuacion(PosX,PosY,1);
+                Por25 = Por25 - 1;
+            }            
+        }while(Por25 != 0);
     },
 
     crear_zombies: function(PosX,PosY,Por25){
