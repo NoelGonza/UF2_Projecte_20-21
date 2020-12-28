@@ -10,7 +10,6 @@ let Partida = {
     vidas: 3,
     punts: 0,
     victoria: 0,
-    contador_mei: 0,
     contador_vid: 0,
 
     inicialitzar_tauler: function(ample,llarg){
@@ -129,10 +128,10 @@ let Partida = {
     },
 
     crear_Meitat: function(PosX,PosY,Por25){
-        let direccion = 1;
-        direccion = Math.floor((Math.random() * 2) + 1);
+        direccion = true;
+        direccion = (Math.random() < 0.5);
         console.log(direccion);
-        if (direccion = 1){
+        if (direccion){
             do{
                 PosX = Math.floor(Math.random()*(this.tauler.length));
                 PosY = Math.floor(Math.random()*(this.tauler[0].length-1));
@@ -149,6 +148,8 @@ let Partida = {
             do{
                 PosX = Math.floor(Math.random()*(this.tauler.length-1));
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
+                console.log(PosX);
+                console.log(PosY);
             }
             while (this.tauler[PosX][PosY] != "g" && this.tauler[PosX+1][PosY] != "g");
             var pivote = new Meitatzombi([PosX+1,PosY], [PosX,PosY],"m",null,"<img src='img/meitatz.png'>");
@@ -158,17 +159,6 @@ let Partida = {
             this.tauler[PosX][PosY] = cambia;
             this.tauler[PosX+1][PosY] = cambia;
         }
-        /*for (let i=0;i < Por25;i++){
-            do{
-                PosX = Math.floor(Math.random()*(this.tauler.length));
-                PosY = Math.floor(Math.random()*(this.tauler[0].length));
-            }
-            while (this.tauler[PosX][PosY] != "g" && this.tauler[PosX][PosY+1] != "g");
-            var pivote = new Meitatzombi([],null, [PosX,PosY],"m",null,"<img src='img/meitatz.png'>");
-            this.meitat.push(pivote);
-            var cambia = pivote.ModificaArray();
-            this.tauler[PosX][PosY] = cambia;
-        }*/
     },
 
     crear_VidaExtra: function(PosX,PosY,Por25){
@@ -280,8 +270,8 @@ function buscar_obj(){
                 Partida.tauler[posX][posY] = Partida.meitat[i].Descobert(Partida.meitat[i]);
                 Partida.tauler2[posX][posY] = Partida.meitat[i].MuestraIMG(Partida.meitat[i]);
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                Partida.contador_mei++;
-                if (Partida.contador_mei == 2){
+                if (Partida.tauler[Partida.meitat[i].pos1[0]][Partida.meitat[i].pos1[1]] == "M" 
+                && Partida.tauler[Partida.meitat[i].pos2[0]][Partida.meitat[i].pos2[1]] == "M"){
                     contador_z = [];
                     for(let i=0;i < Partida.zombis.length;i++){
                         console.log(Partida.zombis);
@@ -290,13 +280,17 @@ function buscar_obj(){
                             contador_z.push(zz);
                         }
                     }
-                    for(let i=0;i < Math.floor(contador_z.length/2);i++){
+                    largo_z = contador_z.length;
+                    for(let i=0;i < Math.floor(largo_z.length/2);i++){
                         console.log(contador_z.length);
-                        let r = Math.floor(Math.random()*(contador_z.length));
+                        let r = Math.floor(Math.random()*(contador_z.length - 1));
                         let pep = contador_z[r];
                         Partida.tauler[pep.pos1[0]][pep.pos1[1]] = "g";
                         Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                        QuitarValor(contador_z, pep);
+                        QuitarValor(Partida.zombis, pep);
                     }
+                    contador_z = [];
                     alert("Se pusieron a la mitat los zombis");
                 }
             }
@@ -304,8 +298,8 @@ function buscar_obj(){
                 Partida.tauler[posX][posY] = Partida.meitat[i].Descobert(Partida.meitat[i]);
                 Partida.tauler2[posX][posY] = Partida.meitat[i].MuestraIMG(Partida.meitat[i]);
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                Partida.contador_mei++;
-                if (Partida.contador_mei == 2){
+                if (Partida.tauler[Partida.meitat[i].pos1[0]][Partida.meitat[i].pos1[1]] == "M" 
+                && Partida.tauler[Partida.meitat[i].pos2[0]][Partida.meitat[i].pos2[1]] == "M"){
                     contador_z = [];
                     for(let i=0;i < Partida.zombis.length;i++){
                         console.log(Partida.zombis);
@@ -314,13 +308,16 @@ function buscar_obj(){
                             contador_z.push(zz);
                         }
                     }
-                    for(let i=0;i < Math.floor(contador_z.length/2);i++){
-                        console.log(contador_z.length);
-                        let r = Math.floor(Math.random()*(contador_z.length));
+                    largo_z = contador_z.length;
+                    for(let i=0;i < Math.floor(largo_z/2);i++){
+                        let r = Math.floor(Math.random()*(contador_z.length - 1));
                         let pep = contador_z[r];
                         Partida.tauler[pep.pos1[0]][pep.pos1[1]] = "g";
                         Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                        QuitarValor(contador_z, pep);
+                        QuitarValor(Partida.zombis, pep);
                     }
+                    contador_z = [];
                     alert("Se pusieron a la mitat los zombis");
                 }
             }
@@ -342,5 +339,10 @@ function buscar_obj(){
                 }
             }
         }
+    }
+
+    function QuitarValor ( arr, item ) {
+        var i = arr.indexOf( item );
+        arr.splice( i, 1 );
     }
 }
