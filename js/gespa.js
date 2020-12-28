@@ -1,6 +1,10 @@
 //Clase gespa para saber que es gespa
 var Gespa = function(){
     Element.apply(this, arguments);
+
+    this.MuestraIMG2 = function(){
+        return img = "<img src='img/gespa2.png'>";
+    }
 };
 
 Gespa.prototype = Object.create(Element.prototype);

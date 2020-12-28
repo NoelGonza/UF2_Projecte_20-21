@@ -81,7 +81,7 @@ let Partida = {
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
             }
             while (this.tauler[PosX][PosY] != "g");
-            var pivote = new Zombi(null, [PosX,PosY],"z",100,"<img src='img/zombie3.png'>");
+            var pivote = new Zombi(null, [PosX,PosY],"z",100,"<img src='img/zombi1.png'>");
             this.zombis.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
@@ -95,7 +95,7 @@ let Partida = {
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
             }
             while (this.tauler[PosX][PosY] != "g");
-            var pivote = new Estrella(null, [PosX,PosY],"e",200);
+            var pivote = new Estrella(null, [PosX,PosY],"e",200,"<img src='img/estrella.png'>");
             this.estrelles.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
@@ -109,7 +109,7 @@ let Partida = {
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
             }
             while (this.tauler[PosX][PosY] != "g");
-            var pivote = new Doblepunts(null, [PosX,PosY],"d",null);
+            var pivote = new Doblepunts(null, [PosX,PosY],"d",null,"<img src='img/doble.png'>");
             this.doble.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
@@ -123,7 +123,7 @@ let Partida = {
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
             }
             while (this.tauler[PosX][PosY] != "g");
-            var pivote = new Meitatzombi(null, [PosX,PosY],"m",null);
+            var pivote = new Meitatzombi(null, [PosX,PosY],"m",null,"<img src='img/meitatz.png'>");
             this.meitat.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
@@ -139,7 +139,7 @@ let Partida = {
                 console.log(PosY);
             }
             while (this.tauler[PosX][PosY] != "g");
-            var pivote = new Vidaextra(null, [PosX,PosY],"v",null);
+            var pivote = new Vidaextra(null, [PosX,PosY],"v",null,"<img src='img/vida.png'>");
             this.vidaex.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
@@ -195,6 +195,7 @@ function buscar_obj(){
         for (let i=0; i < Partida.gespa.length; i++){
             if (Partida.gespa[i].pos1[0] == posX && Partida.gespa[i].pos1[1] == posY){
                 Partida.tauler[posX][posY] = Partida.gespa[i].Descobert(Partida.gespa[i]);
+                Partida.tauler2[posX][posY] = Partida.gespa[i].MuestraIMG2(Partida.gespa[i]);
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                 Partida.punts = Partida.punts + Partida.gespa[i].Puntuaciones();
                 document.getElementById("punt").innerHTML = Partida.punts;
@@ -207,6 +208,7 @@ function buscar_obj(){
         for (let i=0; i < Partida.estrelles.length; i++){
             if (Partida.estrelles[i].pos1[0] == posX && Partida.estrelles[i].pos1[1] == posY){
                 Partida.tauler[posX][posY] = Partida.estrelles[i].Descobert(Partida.estrelles[i]);
+                Partida.tauler2[posX][posY] = Partida.estrelles[i].MuestraIMG(Partida.estrelles[i]);
                 Partida.victoria++;
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                 Partida.punts = Partida.punts + Partida.estrelles[i].Puntuaciones();
@@ -221,6 +223,7 @@ function buscar_obj(){
     else if (Partida.tauler[posX][posY] == "d"){
         if (Partida.doble[0].pos1[0] == posX && Partida.doble[0].pos1[1] == posY){
             Partida.tauler[posX][posY] = Partida.doble[0].Descobert(Partida.doble[i]);
+            Partida.tauler2[posX][posY] = Partida.doble[i].MuestraIMG(Partida.doble[i]);
             Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
             Partida.punts = Partida.doble[0].Doblar();
             console.log(Partida.punts)
@@ -232,6 +235,7 @@ function buscar_obj(){
         for (let i=0; i < Partida.meitat.length; i++){
             if (Partida.meitat[i].pos1[0] == posX && Partida.meitat[i].pos1[1] == posY){
                 Partida.tauler[posX][posY] = Partida.meitat[i].Descobert(Partida.meitat[i]);
+                Partida.tauler2[posX][posY] = Partida.meitat[i].MuestraIMG(Partida.meitat[i]);
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                 Partida.contador_mei++;
                 if (Partida.contador_mei == 2){
@@ -260,6 +264,7 @@ function buscar_obj(){
         for (let i=0; i < Partida.vidaex.length; i++){
             if (Partida.vidaex[i].pos1[0] == posX && Partida.vidaex[i].pos1[1] == posY){
                 Partida.tauler[posX][posY] = Partida.vidaex[i].Descobert(Partida.vidaex[i]);
+                Partida.tauler2[posX][posY] = Partida.vidaex[i].MuestraIMG(Partida.vidaex[i]);
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                 Partida.contador_vid++;
                 console.log(Partida.contador_vid)
