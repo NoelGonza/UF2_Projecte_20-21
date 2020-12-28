@@ -221,13 +221,15 @@ function buscar_obj(){
     }
     //Else if para si encuentras doblar los puntos se doblen.
     else if (Partida.tauler[posX][posY] == "d"){
-        if (Partida.doble[0].pos1[0] == posX && Partida.doble[0].pos1[1] == posY){
-            Partida.tauler[posX][posY] = Partida.doble[0].Descobert(Partida.doble[i]);
-            Partida.tauler2[posX][posY] = Partida.doble[i].MuestraIMG(Partida.doble[i]);
-            Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-            Partida.punts = Partida.doble[0].Doblar();
-            console.log(Partida.punts)
-            document.getElementById("punt").innerHTML = Partida.punts;
+        for (let i=0; i < Partida.doble.length; i++){
+            if (Partida.doble[i].pos1[0] == posX && Partida.doble[i].pos1[1] == posY){
+                Partida.tauler[posX][posY] = Partida.doble[i].Descobert(Partida.doble[i]);
+                Partida.tauler2[posX][posY] = Partida.doble[i].MuestraIMG(Partida.doble[i]);
+                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                Partida.punts = Partida.doble[i].Doblar();
+                console.log(Partida.punts)
+                document.getElementById("punt").innerHTML = Partida.punts;
+            }
         }
     }
     //Else if para si encuentras todos meitat zombis se hagan a la mitat.
