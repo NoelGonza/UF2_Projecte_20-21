@@ -131,6 +131,7 @@ let Partida = {
     crear_Meitat: function(PosX,PosY,Por25){
         let direccion = 1;
         direccion = Math.floor((Math.random() * 2) + 1);
+        console.log(direccion);
         if (direccion = 1){
             do{
                 PosX = Math.floor(Math.random()*(this.tauler.length));
@@ -144,10 +145,20 @@ let Partida = {
             this.tauler[PosX][PosY] = cambia;
             this.tauler[PosX][PosY+1] = cambia;
         }
-        /*else{
-
+        else{
+            do{
+                PosX = Math.floor(Math.random()*(this.tauler.length-1));
+                PosY = Math.floor(Math.random()*(this.tauler[0].length));
+            }
+            while (this.tauler[PosX][PosY] != "g" && this.tauler[PosX+1][PosY] != "g");
+            var pivote = new Meitatzombi([PosX+1,PosY], [PosX,PosY],"m",null,"<img src='img/meitatz.png'>");
+            console.log(pivote);
+            this.meitat.push(pivote);
+            var cambia = pivote.ModificaArray();
+            this.tauler[PosX][PosY] = cambia;
+            this.tauler[PosX+1][PosY] = cambia;
         }
-        for (let i=0;i < Por25;i++){
+        /*for (let i=0;i < Por25;i++){
             do{
                 PosX = Math.floor(Math.random()*(this.tauler.length));
                 PosY = Math.floor(Math.random()*(this.tauler[0].length));
