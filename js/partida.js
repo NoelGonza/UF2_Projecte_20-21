@@ -29,15 +29,11 @@ let Partida = {
     },
 
     mostrar_tauler: function(num1,num2){
-        let abc = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 
-        'O', 'P', 'Q', 'R', 'S', 'T'];
         let tablero = "<div id='tau'>";
         for (let i=0;i < num1; i++){
-            aux1 = abc[i];
-            tablero += "<div id='"+aux1+"' class='pepe'>";
+            tablero += "<div id='"+i+"' class='pepe'>";
             for (let j=0;j < num2; j++){
-                aux2 = abc[j];
-                tablero += "<div id='"+aux1+aux2+"' class='pope'>"+this.tauler2[i][j]+"</div>";
+                tablero += "<div id='"+i+"-"+j+"' class='pope'>"+this.tauler2[i][j]+"</div>";
             }
             tablero +="</div>";
         }
