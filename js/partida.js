@@ -41,21 +41,6 @@ let Partida = {
         document.getElementById("tablero").innerHTML = tablero;
     },
 
-    clicar_div: function(event){
-        var elide = event.target;
-        document.getElementById("owo").innerHTML = "Esta id esta ocupado: "+ elide.id;
-    },
-
-    insertar_valores: function(){
-        let valor = Math.floor(this.max_tauler / 4)
-        console.log(valor)
-        for (let i=0;i<this.tauler.length;i++){
-            for (let j=0;j<this.tauler.length;j++){
-                console.log(this.tauler[i][j] == this.zombis[1])
-            }
-        }
-    },
-
     crear_objetos: function(mida1, mida2){
         porcentaje = Math.round((mida1 * mida2)/4);
         estrellas = Math.round((parseInt(mida1)+parseInt(mida2))/2);
@@ -198,7 +183,6 @@ let Partida = {
         this.mostrar_tauler(mida1,mida2);
         this.crear_objetos(mida1,mida2);
         console.log(this.tauler);
-        this.insertar_valores();
     }
 }
 

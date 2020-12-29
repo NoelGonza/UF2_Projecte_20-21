@@ -6,27 +6,29 @@
         <link rel="stylesheet" href="css/index.css">
     </head>
     <body>
-        <div id="pregunta">
-            <input type="text" id="t1">
-            <input type="text" id="t2">
-            <button id="mostra">Mostrar</button>
-            <input type="text" id="z1">
-            <input type="text" id="z2">
-            <button id="busca">Busca Zombie</button>
-            <button id="abandona">Abandona</button>
+        <div id="flexo">
+            <div id="pregunta">
+                <input type="text" id="t1">
+                <input type="text" id="t2">
+                <button id="mostra">Mostrar</button>
+                <br>
+                <input type="text" id="z1">
+                <input type="text" id="z2">
+                <button id="busca">Busca Zombie</button>
+                <br>
+                <button id="abandona">Abandona</button>
+            </div>
+            <div id="estats">
+                <h1 id='p1'>Estadistiques</h1>
+                <p id='p2'>Acertades: <span id='acert'></span></p>
+                <p id='p3'>Perdudes: <span id='perd'></span></p>
+                <p id='p4'>Abandonades: <span id='aban'></span></p>
+                <p id='p5'>Vides: <span id='vid'></span></p>
+                <p id='p6'>Puntuacio: <span id='punt'></span></p>
+            </div>
         </div>
-        <div id="tablero" onclick="Partida.clicar_div(event)">
-        </div>
+        <div id="tablero"></div>
         <p id="owo"></p>
-        <div id="estats">
-            <h1 id='p1'>Estadistiques</h1>
-            <p id='p2'>Acertades: <span id='acert'></span></p>
-            <p id='p3'>Perdudes: <span id='perd'></span></p>
-            <p id='p4'>Abandonades: <span id='aban'></span></p>
-            <p id='p5'>Vides: <span id='vid'></span></p>
-            <p id='p6'>Puntuacio: <span id='punt'></span></p>
-        </div>
-        <div class="papa"><background src='img/vida.png'></div>
         <script src="js/gespa.js"></script>
         <script src="js/zombi.js"></script>
         <script src="js/estrella.js"></script>
