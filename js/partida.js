@@ -233,6 +233,9 @@ function buscar_obj(){
                 //Si las vidas llegan a 0 pierdes
                 if (Partida.vidas == 0){
                     alert("Has perdido wey :(");
+                    perdudes ++;
+                    document.getElementById("perd").innerHTML = perdudes;
+                    crearCookie("perduda",perdudes,25);
                 }
             }
         }
@@ -264,6 +267,9 @@ function buscar_obj(){
         }
         if (Partida.victoria == ganar){
             alert("Has ganado mi niño");
+            acertades ++;
+            document.getElementById("acert").innerHTML = acertades;
+            crearCookie("acertada",acertades,25);
         }
     }
     //Else if para si encuentras doblar los puntos se doblen.
@@ -362,3 +368,54 @@ function buscar_obj(){
         arr.splice( i, 1 );
     }
 }
+
+let acertades = 0;
+let perdudes = 0;
+let abandonades = 0;
+
+comprobarCookie("abandonada");
+
+function crearCookie(clave, valor, data) {
+    var d = new Date();
+    d.setTime(d.getTime() + (data * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = clave + "=" + valor + ";" + expires;
+}
+
+//FUNCION PARA OBTENER EL VALOR DE UNA COOKIE
+function obtenerCookie(clave) {
+    var name = clave + "=";
+    var ca = document.cookie.split(';');
+    for(let i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
+
+/*FUNCION PARA COMPROBAR SI EXISTE UNA COOKIE, SI NO EXISTE SE CREAN TODAS Y SE ASIGNAN Y SI
+EXISTE ASIGNA LOS VALORES DE LAS COOKIES*/ 
+function comprobarCookie(clave) {
+    var clave = obtenerCookie(clave);
+    if (clave!="") {
+        acertades = parseInt(obtenerCookie("acertada"));
+        perdudes = parseInt(obtenerCookie("perduda"));
+        abandonades = parseInt(obtenerCookie("abandonada"));
+    }else{
+        crearCookie("acertada",acertades,25);
+        acertades = parseInt(obtenerCookie("acertada"));
+        crearCookie("perduda",perdudes,25);
+        perdudes = parseInt(obtenerCookie("perduda"));
+        crearCookie("abandonada",abandonades,25);
+        abandonades = parseInt(obtenerCookie("abandonada"));
+    }
+}
+
+function abandonar_partida(){
+    alert("Has abandonat la partida.");
+        abandonades ++;
+        document.getElementById("aban").innerHTML = abandonades;
+        crearCookie("abandonada",abandonades,25);
+}
+document.getElementById("abandona").addEventListener("click", abandonar_partida);

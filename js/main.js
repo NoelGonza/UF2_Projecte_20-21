@@ -1,6 +1,9 @@
 window.onload = function(){
     /* document.getElementById("estats").style.display = "none"; */
     /* document.getElementById("tauler").style.display = "none"; */
+    document.getElementById("acert").innerHTML = acertades;
+    document.getElementById("perd").innerHTML = perdudes;
+    document.getElementById("aban").innerHTML = abandonades;
 }
 
 document.getElementById("mostra").addEventListener("click", mostra_numeros);
