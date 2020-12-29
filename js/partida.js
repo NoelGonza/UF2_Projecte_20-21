@@ -177,8 +177,24 @@ let Partida = {
         }
     },
 
+    reiniciar_valores: function(){
+        this.tauler = [];
+        this.tauler2 = [];
+        this.zombis = [];
+        this.estrelles = [];
+        this.gespa = [];
+        this.doble = [];
+        this.meitat = [];
+        this.vidaex = [];
+        this.vidas = 3;
+        this.punts = 0;
+        this.victoria = 0;
+        this.contador_vid = 0;
+    },
+
     iniciar: function(mida1,mida2){
         //Ponemos los valores de vida i puntos
+        this.reiniciar_valores();
         document.getElementById("vid").innerHTML = this.vidas;
         document.getElementById("punt").innerHTML = this.punts;
         this.max_tauler = mida1 * mida2;
