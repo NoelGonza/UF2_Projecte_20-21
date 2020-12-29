@@ -52,11 +52,11 @@ let Partida = {
     crear_Recompensas: function(PosX,PosY,Por25){
         do{
             if(Por25 >= 3){
-                this.crear_VidaExtra(PosX,PosY,3);
+                this.crear_VidaExtra(PosX,PosY);
                 Por25 = Por25 - 3;
             }
             if(Por25 >= 2){
-                this.crear_Meitat(PosX,PosY,2);
+                this.crear_Meitat(PosX,PosY);
                 Por25 = Por25 - 2;
             }
             if(Por25 >= 1){
@@ -108,7 +108,7 @@ let Partida = {
         }
     },
 
-    crear_Meitat: function(PosX,PosY,Por25){
+    crear_Meitat: function(PosX,PosY){
         direccion = true;
         direccion = (Math.random() < 0.5);
         console.log(direccion);
@@ -119,7 +119,6 @@ let Partida = {
             }
             while (this.tauler[PosX][PosY] != "g" && this.tauler[PosX][PosY+1] != "g");
             var pivote = new Meitatzombi(null,[PosX,PosY+1], [PosX,PosY],"m",null,"<img src='img/meitatz.png'>");
-            console.log(pivote);
             this.meitat.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
@@ -142,19 +141,35 @@ let Partida = {
         }
     },
 
-    crear_VidaExtra: function(PosX,PosY,Por25){
-        for (let i=0;i < Por25;i++){
+    crear_VidaExtra: function(PosX,PosY){
+        direccion = true;
+        direccion = (Math.random() < 0.5);
+        console.log(direccion);
+        if (direccion){
             do{
                 PosX = Math.floor(Math.random()*(this.tauler.length));
-                PosY = Math.floor(Math.random()*(this.tauler[0].length));
-                console.log(PosX);
-                console.log(PosY);
+                PosY = Math.floor(Math.random()*(this.tauler[0].length-1));
             }
-            while (this.tauler[PosX][PosY] != "g");
-            var pivote = new Vidaextra(null,null, [PosX,PosY],"v",null,"<img src='img/vida.png'>");
+            while (this.tauler[PosX][PosY] != "g" && this.tauler[PosX][PosY+1] != "g" && this.tauler[PosX][PosY-1] != "g" && this.tauler[PosY] != -1);
+            var pivote = new Vidaextra([PosX,PosY-1],[PosX,PosY+1], [PosX,PosY],"v",null,"<img src='img/vida.png'>");
             this.vidaex.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
+            this.tauler[PosX][PosY+1] = cambia;
+            this.tauler[PosX][PosY-1] = cambia;
+        }
+        else{
+            do{
+                PosX = Math.floor(Math.random()*(this.tauler.length-1));
+                PosY = Math.floor(Math.random()*(this.tauler[0].length));
+            }
+            while (this.tauler[PosX][PosY] != "g" && this.tauler[PosX+1][PosY] != "g" && this.tauler[PosX-1][PosY] != "g" && this.tauler[PosX] != -1);
+            var pivote = new Vidaextra([PosX-1,PosY],[PosX+1,PosY], [PosX,PosY],"v",null,"<img src='img/vida.png'>");
+            this.vidaex.push(pivote);
+            var cambia = pivote.ModificaArray();
+            this.tauler[PosX][PosY] = cambia;
+            this.tauler[PosX+1][PosY] = cambia;
+            this.tauler[PosX-1][PosY] = cambia;
         }
     },
 
@@ -332,9 +347,33 @@ function buscar_obj(){
                 Partida.tauler[posX][posY] = Partida.vidaex[i].Descobert(Partida.vidaex[i]);
                 Partida.tauler2[posX][posY] = Partida.vidaex[i].MuestraIMG(Partida.vidaex[i]);
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                Partida.contador_vid++;
-                console.log(Partida.contador_vid)
-                if(Partida.contador_vid == 3){
+                if (Partida.tauler[Partida.vidaex[i].pos1[0]][Partida.vidaex[i].pos1[1]] == "V" 
+                && Partida.tauler[Partida.vidaex[i].pos2[0]][Partida.vidaex[i].pos2[1]] == "V"
+                && Partida.tauler[Partida.vidaex[i].pos3[0]][Partida.vidaex[i].pos3[1]] == "V"){
+                    Partida.vidaex[i].Sumarvida();
+                    console.log(Partida.vidas);
+                    Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                }
+            }
+            if (Partida.vidaex[i].pos2[0] == posX && Partida.vidaex[i].pos2[1] == posY){
+                Partida.tauler[posX][posY] = Partida.vidaex[i].Descobert(Partida.vidaex[i]);
+                Partida.tauler2[posX][posY] = Partida.vidaex[i].MuestraIMG(Partida.vidaex[i]);
+                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                if (Partida.tauler[Partida.vidaex[i].pos1[0]][Partida.vidaex[i].pos1[1]] == "V" 
+                && Partida.tauler[Partida.vidaex[i].pos2[0]][Partida.vidaex[i].pos2[1]] == "V"
+                && Partida.tauler[Partida.vidaex[i].pos3[0]][Partida.vidaex[i].pos3[1]] == "V"){
+                    Partida.vidaex[i].Sumarvida();
+                    document.getElementById("vid").innerHTML = Partida.vidas;
+                    Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                }
+            }
+            if (Partida.vidaex[i].pos3[0] == posX && Partida.vidaex[i].pos3[1] == posY){
+                Partida.tauler[posX][posY] = Partida.vidaex[i].Descobert(Partida.vidaex[i]);
+                Partida.tauler2[posX][posY] = Partida.vidaex[i].MuestraIMG(Partida.vidaex[i]);
+                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                if (Partida.tauler[Partida.vidaex[i].pos1[0]][Partida.vidaex[i].pos1[1]] == "V" 
+                && Partida.tauler[Partida.vidaex[i].pos2[0]][Partida.vidaex[i].pos2[1]] == "V"
+                && Partida.tauler[Partida.vidaex[i].pos3[0]][Partida.vidaex[i].pos3[1]] == "V"){
                     Partida.vidaex[i].Sumarvida();
                     document.getElementById("vid").innerHTML = Partida.vidas;
                     Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
