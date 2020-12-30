@@ -173,6 +173,69 @@ let Partida = {
         }
     },
 
+    mostrar_momento: function(){
+        let mostrado = this.tauler2;
+        for (let i=0;i < this.tauler.length; i++){
+            for (let j=0;j < this.tauler[0].length; j++){
+                if(Partida.tauler[i][j] == "z"){
+                    for (let n=0; n < Partida.zombis.length; n++) {
+                        if(Partida.zombis[n].pos1[0] == i && Partida.zombis[n].pos1[1] == j){
+                            Partida.tauler2[i][j] = Partida.zombis[n].MuestraIMG(Partida.zombis[n]);
+                        }
+                    }
+                }
+                if(Partida.tauler[i][j] == "g"){
+                    for (let n=0; n < Partida.gespa.length; n++) {
+                        if(Partida.gespa[n].pos1[0] == i && Partida.gespa[n].pos1[1] == j){
+                            Partida.tauler2[i][j] = Partida.gespa[n].MuestraIMG2(Partida.gespa[n]);
+                        }
+                    }
+                }
+                if(Partida.tauler[i][j] == "e"){
+                    for (let n=0; n < Partida.estrelles.length; n++) {
+                        if(Partida.estrelles[n].pos1[0] == i && Partida.estrelles[n].pos1[1] == j){
+                            Partida.tauler2[i][j] = Partida.estrelles[n].MuestraIMG(Partida.estrelles[n]);
+                        }
+                    }
+                }
+                if(Partida.tauler[i][j] == "d"){
+                    for (let n=0; n < Partida.doble.length; n++) {
+                        if(Partida.doble[n].pos1[0] == i && Partida.doble[n].pos1[1] == j){
+                            Partida.tauler2[i][j] = Partida.doble[n].MuestraIMG(Partida.doble[n]);
+                        }
+                    }
+                }
+                if(Partida.tauler[i][j] == "m"){
+                    for (let n=0; n < Partida.meitat.length; n++) {
+                        if(Partida.meitat[n].pos1[0] == i && Partida.meitat[n].pos1[1] == j){
+                            Partida.tauler2[i][j] = Partida.meitat[n].MuestraIMG(Partida.meitat[n]);
+                        }
+                        if(Partida.meitat[n].pos2[0] == i && Partida.meitat[n].pos2[1] == j){
+                            Partida.tauler2[i][j] = Partida.meitat[n].MuestraIMG(Partida.meitat[n]);
+                        }
+                    }
+                }
+                if(Partida.tauler[i][j] == "v"){
+                    for (let n=0; n < Partida.vidaex.length; n++) {
+                        if(Partida.vidaex[n].pos1[0] == i && Partida.vidaex[n].pos1[1] == j){
+                            Partida.tauler2[i][j] = Partida.vidaex[n].MuestraIMG(Partida.vidaex[n]);
+                        }
+                        if(Partida.vidaex[n].pos2[0] == i && Partida.vidaex[n].pos2[1] == j){
+                            Partida.tauler2[i][j] = Partida.vidaex[n].MuestraIMG(Partida.vidaex[n]);
+                        }
+                        if(Partida.vidaex[n].pos3[0] == i && Partida.vidaex[n].pos3[1] == j){
+                            Partida.tauler2[i][j] = Partida.vidaex[n].MuestraIMG(Partida.vidaex[n]);
+                        }
+                    }
+                }
+            }
+        }
+        this.mostrar_tauler(Partida.tauler2.length,Partida.tauler2[0].length);
+        this.tauler2 = mostrado;
+        console.log(this.tauler2)
+        setTimeout(this.mostrar_tauler(Partida.tauler2.length,Partida.tauler2[0].length),300);
+    },
+
     reiniciar_valores: function(){
         this.tauler = [];
         this.tauler2 = [];
@@ -251,6 +314,9 @@ function buscar_obj(){
     else if (Partida.tauler[posX][posY] == "e"){
         let ganar = Partida.estrelles.length;
         for (let i=0; i < Partida.estrelles.length; i++){
+            if(i == 0){
+                Partida.mostrar_momento();
+            }
             if (Partida.estrelles[i].pos1[0] == posX && Partida.estrelles[i].pos1[1] == posY){
                 Partida.tauler[posX][posY] = Partida.estrelles[i].Descobert(Partida.estrelles[i]);
                 Partida.tauler2[posX][posY] = Partida.estrelles[i].MuestraIMG(Partida.estrelles[i]);

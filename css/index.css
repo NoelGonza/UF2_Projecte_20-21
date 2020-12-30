@@ -22,12 +22,12 @@ body{
 }
 
 div .pope{
-    width: 50px;
+    width: 60px;
     height: 50px;
     border: 1px solid black;
     display: flex;
     flex-direction: column;
-    /* background-color: #05abe0; */
+    background-color: #31e240;
 }
 
 /* div.papa{
@@ -41,6 +41,6 @@ div .pope{
 } */
 
 img{
-    width: 50px;
+    width: 60px;
     height: 50px;
 }
