@@ -18,7 +18,7 @@ let Partida = {
         for (let i=0;i < ample; i++){
             this.tauler[i]=[];
             this.tauler2[i]=[];
-            this.mostrado[i]=[];
+            /* this.mostrado[i]=[]; */
             for (let j=0;j < llarg; j++){
                 //Definimos gespa i la guardamos en la array gespa i la añadimos en la array tauler tambien
                 var gespa1 = new Gespa(null,null, [i,j],"g",50,"<img src='img/gespa.png'>");
@@ -27,7 +27,7 @@ let Partida = {
                 this.tauler[i][j]=posicionar;
                 var imagen = gespa1.MuestraIMG();
                 this.tauler2[i][j]=imagen;
-                this.mostrado[i][j]=imagen;
+                /* this.mostrado[i][j]=imagen; */
             }
         }
     },
