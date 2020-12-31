@@ -330,6 +330,7 @@ function buscar_obj(){
                     function espera(){
                         Partida.tauler2 = Partida.aux;
                         Partida.mostrar_tauler(Partida.tauler2.length,Partida.tauler2[0].length);
+                        console.log(Partida.tauler2)
                     }
                     setTimeout(espera,5000);
                 }
