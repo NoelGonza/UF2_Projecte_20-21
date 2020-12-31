@@ -7,8 +7,8 @@ let Partida = {
     doble: [],
     meitat: [],
     vidaex: [],
-    /* mostrado: [],
-    aux: [], */
+    mostrado: [],
+    aux: [],
     vidas: 3,
     punts: 0,
     victoria: 0,
@@ -18,7 +18,7 @@ let Partida = {
         for (let i=0;i < ample; i++){
             this.tauler[i]=[];
             this.tauler2[i]=[];
-            /* this.mostrado[i]=[]; */
+            this.mostrado[i]=[];
             for (let j=0;j < llarg; j++){
                 //Definimos gespa i la guardamos en la array gespa i la añadimos en la array tauler tambien
                 var gespa1 = new Gespa(null,null, [i,j],"g",50,"<img src='img/gespa.png'>");
@@ -27,7 +27,7 @@ let Partida = {
                 this.tauler[i][j]=posicionar;
                 var imagen = gespa1.MuestraIMG();
                 this.tauler2[i][j]=imagen;
-                /* this.mostrado[i][j]=imagen; */
+                this.mostrado[i][j]=imagen;
             }
         }
     },
@@ -177,75 +177,66 @@ let Partida = {
         }
     },
 
-    /* mostrar_momento: function(){
-        this.aux = this.tauler2;
-        console.log(this.aux)
+    mostrar_momento: function(){
         for (let i=0;i < this.tauler.length; i++){
             for (let j=0;j < this.tauler[0].length; j++){
-                if(Partida.tauler[i][j] == "z"){
-                    for (let n=0; n < Partida.zombis.length; n++) {
-                        if(Partida.zombis[n].pos1[0] == i && Partida.zombis[n].pos1[1] == j){
-                            this.mostrado[i][j] = Partida.zombis[n].MuestraIMG(Partida.zombis[n]);
+                if(this.tauler[i][j] == "z" || this.tauler[i][j] == "Z"){
+                    for (let n=0; n < this.zombis.length; n++) {
+                        if(this.zombis[n].pos1[0] == i && this.zombis[n].pos1[1] == j){
+                            this.mostrado[i][j] = this.zombis[n].MuestraIMG(this.zombis[n]);
                         }
                     }
                 }
-                if(Partida.tauler[i][j] == "g"){
-                    for (let n=0; n < Partida.gespa.length; n++) {
-                        if(Partida.gespa[n].pos1[0] == i && Partida.gespa[n].pos1[1] == j){
-                            this.mostrado[i][j] = Partida.gespa[n].MuestraIMG2(Partida.gespa[n]);
+                if(this.tauler[i][j] == "g" || this.tauler[i][j] == "G"){
+                    for (let n=0; n < this.gespa.length; n++) {
+                        if(this.gespa[n].pos1[0] == i && this.gespa[n].pos1[1] == j){
+                            this.mostrado[i][j] = this.gespa[n].MuestraIMG2(this.gespa[n]);
                         }
                     }
                 }
-                if(Partida.tauler[i][j] == "e"){
-                    for (let n=0; n < Partida.estrelles.length; n++) {
-                        if(Partida.estrelles[n].pos1[0] == i && Partida.estrelles[n].pos1[1] == j){
-                            this.mostrado[i][j] = Partida.estrelles[n].MuestraIMG(Partida.estrelles[n]);
+                if(this.tauler[i][j] == "e" || this.tauler[i][j] == "E"){
+                    for (let n=0; n < this.estrelles.length; n++) {
+                        if(this.estrelles[n].pos1[0] == i && this.estrelles[n].pos1[1] == j){
+                            this.mostrado[i][j] = this.estrelles[n].MuestraIMG(this.estrelles[n]);
                         }
                     }
                 }
-                if(Partida.tauler[i][j] == "d"){
-                    for (let n=0; n < Partida.doble.length; n++) {
-                        if(Partida.doble[n].pos1[0] == i && Partida.doble[n].pos1[1] == j){
-                            this.mostrado[i][j] = Partida.doble[n].MuestraIMG(Partida.doble[n]);
+                if(this.tauler[i][j] == "d" || this.tauler[i][j] == "D"){
+                    for (let n=0; n < this.doble.length; n++) {
+                        if(this.doble[n].pos1[0] == i && this.doble[n].pos1[1] == j){
+                            this.mostrado[i][j] = this.doble[n].MuestraIMG(this.doble[n]);
                         }
                     }
                 }
-                if(Partida.tauler[i][j] == "m"){
-                    for (let n=0; n < Partida.meitat.length; n++) {
-                        if(Partida.meitat[n].pos1[0] == i && Partida.meitat[n].pos1[1] == j){
-                            this.mostrado[i][j] = Partida.meitat[n].MuestraIMG(Partida.meitat[n]);
+                if(this.tauler[i][j] == "m" || this.tauler[i][j] == "M"){
+                    for (let n=0; n < this.meitat.length; n++) {
+                        if(this.meitat[n].pos1[0] == i && this.meitat[n].pos1[1] == j){
+                            this.mostrado[i][j] = this.meitat[n].MuestraIMG(this.meitat[n]);
                         }
-                        if(Partida.meitat[n].pos2[0] == i && Partida.meitat[n].pos2[1] == j){
-                            this.mostrado[i][j] = Partida.meitat[n].MuestraIMG(Partida.meitat[n]);
+                        if(this.meitat[n].pos2[0] == i && this.meitat[n].pos2[1] == j){
+                            this.mostrado[i][j] = this.meitat[n].MuestraIMG(this.meitat[n]);
                         }
                     }
                 }
-                if(Partida.tauler[i][j] == "v"){
-                    for (let n=0; n < Partida.vidaex.length; n++) {
-                        if(Partida.vidaex[n].pos1[0] == i && Partida.vidaex[n].pos1[1] == j){
-                            this.mostrado[i][j] = Partida.vidaex[n].MuestraIMG(Partida.vidaex[n]);
+                if(this.tauler[i][j] == "v" || this.tauler[i][j] == "V"){
+                    for (let n=0; n < this.vidaex.length; n++) {
+                        if(this.vidaex[n].pos1[0] == i && this.vidaex[n].pos1[1] == j){
+                            this.mostrado[i][j] = this.vidaex[n].MuestraIMG(this.vidaex[n]);
                         }
-                        if(Partida.vidaex[n].pos2[0] == i && Partida.vidaex[n].pos2[1] == j){
-                            this.mostrado[i][j] = Partida.vidaex[n].MuestraIMG(Partida.vidaex[n]);
+                        if(this.vidaex[n].pos2[0] == i && this.vidaex[n].pos2[1] == j){
+                            this.mostrado[i][j] = this.vidaex[n].MuestraIMG(this.vidaex[n]);
                         }
-                        if(Partida.vidaex[n].pos3[0] == i && Partida.vidaex[n].pos3[1] == j){
-                            this.mostrado[i][j] = Partida.vidaex[n].MuestraIMG(Partida.vidaex[n]);
+                        if(this.vidaex[n].pos3[0] == i && this.vidaex[n].pos3[1] == j){
+                            this.mostrado[i][j] = this.vidaex[n].MuestraIMG(this.vidaex[n]);
                         }
                     }
                 }
             }
         }
+        this.aux = this.tauler2;
         this.tauler2 = this.mostrado;
-        console.log(this.tauler2)
         this.mostrar_tauler(this.tauler2.length,this.tauler2[0].length);
-        console.log(this.tauler2)
-        this.tauler2 = this.aux;
-        setTimeout(this.muestra(),10000);
     },
-
-    muestra: function(){
-        this.mostrar_tauler(this.tauler2.length,this.tauler2[0].length)
-    }, */
 
     reiniciar_valores: function(){
         this.tauler = [];
@@ -325,14 +316,19 @@ function buscar_obj(){
     else if (Partida.tauler[posX][posY] == "e"){
         let ganar = Partida.estrelles.length;
         for (let i=0; i < Partida.estrelles.length; i++){
-            /* if(i == 0){
-                Partida.mostrar_momento();
-            } */
             if (Partida.estrelles[i].pos1[0] == posX && Partida.estrelles[i].pos1[1] == posY){
                 Partida.tauler[posX][posY] = Partida.estrelles[i].Descobert(Partida.estrelles[i]);
                 Partida.tauler2[posX][posY] = Partida.estrelles[i].MuestraIMG(Partida.estrelles[i]);
                 Partida.victoria++;
                 Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                if(Partida.victoria == 1){
+                    Partida.mostrar_momento();
+                    function espera(){
+                        Partida.tauler2 = Partida.aux;
+                        Partida.mostrar_tauler(Partida.tauler2.length,Partida.tauler2[0].length);
+                    }
+                    setTimeout(espera,5000);
+                }
                 Partida.punts = Partida.punts + Partida.estrelles[i].Puntuaciones();
                 document.getElementById("punt").innerHTML = Partida.punts;
             }
