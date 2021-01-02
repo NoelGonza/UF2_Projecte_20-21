@@ -21,7 +21,7 @@ let Partida = {
             this.mostrado[i]=[];
             for (let j=0;j < llarg; j++){
                 //Definimos gespa i la guardamos en la array gespa i la añadimos en la array tauler tambien
-                var gespa1 = new Gespa(null,null, [i,j],"g",50,"<img src='img/gespa.png'>");
+                var gespa1 = new Gespa(null,null, [i,j],"g",50,"<img src='img/gespa.png' id='"+i+"-"+j+"'>");
                 this.gespa.push(gespa1);
                 var posicionar = gespa1.ModificaArray();
                 this.tauler[i][j]=posicionar;
@@ -264,11 +264,26 @@ let Partida = {
     }
 }
 
-document.getElementById("busca").addEventListener("click", buscar_obj);
+var elDiv = document.getElementById("tablero");
+elDiv.onclick = function(event){
+    var elide = event.target;
+    document.getElementById("owo").innerHTML = "Esta id esta ocupado: "+ elide.id;
+    let palabro = [];
+    palabro = elide.id.split("");
+    let PosX = palabro[0];
+    let PosY = palabro[2];
+    console.log(PosX+"-"+PosY);
+    buscar_obj(PosX,PosY);
+};
 
-function buscar_obj(){
-    let posX = document.getElementById("z1").value;
-    let posY = document.getElementById("z2").value;
+var buscar = document.getElementById("busca");
+buscar.addEventListener("click",buscar_obj);
+
+function buscar_obj(posX,posY){
+    if(document.getElementById("z1").value != "" && document.getElementById("z1").value != ""){
+        posX = document.getElementById("z1").value;
+        posY = document.getElementById("z2").value;
+    }
     if (Partida.tauler[posX][posY] == "z"){
         for (let i=0; i < Partida.zombis.length; i++) {
             //Restamos una vida cada vez que se ejecuta este if porque emos encontrado un zombie
@@ -458,6 +473,8 @@ function buscar_obj(){
         var i = arr.indexOf( item );
         arr.splice( i, 1 );
     }
+    document.getElementById("z1").value = "";
+    document.getElementById("z2").value = "";
 }
 
 let acertades = 0;
