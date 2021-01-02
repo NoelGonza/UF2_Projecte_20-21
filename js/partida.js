@@ -270,211 +270,247 @@ elDiv.onclick = function(event){
     document.getElementById("owo").innerHTML = "Esta id esta ocupado: "+ elide.id;
     let palabro = [];
     palabro = elide.id.split("");
-    let PosX = palabro[0];
-    let PosY = palabro[2];
-    console.log(PosX+"-"+PosY);
-    buscar_obj(PosX,PosY);
+    let PosX;
+    let PosY;
+    console.log(palabro)
+    if(palabro.length > 3){
+        if(palabro[2] == "-" && palabro.length == 4){
+            PosX = palabro[0] + palabro[1];
+            PosY = palabro[3];
+            console.log(PosX+"-"+PosY);
+            buscar_obj(PosX,PosY);
+        }
+        else if(palabro[2] == "-" && palabro.length == 5){
+            PosX = palabro[0] + palabro[1];
+            PosY = palabro[3] + palabro[4];
+            console.log(PosX+"-"+PosY);
+            buscar_obj(PosX,PosY);
+        }
+        else if(palabro[1] == "-" && palabro.length == 4){
+            PosX = palabro[0];
+            PosY = palabro[2] + palabro[3];
+            console.log(PosX+"-"+PosY);
+            buscar_obj(PosX,PosY);
+        }
+    }
+    else{
+        PosX = palabro[0];
+        PosY = palabro[2];
+        console.log(PosX+"-"+PosY);
+        buscar_obj(PosX,PosY);
+    }
 };
 
 var buscar = document.getElementById("busca");
 buscar.addEventListener("click",buscar_obj);
 
 function buscar_obj(posX,posY){
+    let boleo = true;
     if(document.getElementById("z1").value != "" && document.getElementById("z1").value != ""){
         posX = document.getElementById("z1").value;
         posY = document.getElementById("z2").value;
+        console.log(posX+"-"+posY);
     }
-    if (Partida.tauler[posX][posY] == "z"){
-        for (let i=0; i < Partida.zombis.length; i++) {
-            //Restamos una vida cada vez que se ejecuta este if porque emos encontrado un zombie
-            if (Partida.zombis[i].pos1[0] == posX && Partida.zombis[i].pos1[1] == posY){
-                Partida.tauler[posX][posY] = Partida.zombis[i].Descobert(Partida.zombis[i]);
-                Partida.tauler2[posX][posY] = Partida.zombis[i].MuestraIMG(Partida.zombis[i]);
-                Partida.mostrar_tauler(Partida.tauler2.length,Partida.tauler2[0].length);
-                Partida.vidas--;
-                document.getElementById("vid").innerHTML = Partida.vidas;
-                //Si los puntos son mas grandes o igual a 100 le restamos los 100 que estan definidos en zombie
-                if (Partida.punts >= 100){
-                    Partida.punts = Partida.punts - Partida.zombis[i].Puntuaciones();
+    if(posX == undefined && posY == undefined){
+        alert("Aquesta casella ja esta destapada");
+        boleo = false;
+    }
+    if(boleo == true){
+        if (Partida.tauler[posX][posY] == "z"){
+            for (let i=0; i < Partida.zombis.length; i++) {
+                //Restamos una vida cada vez que se ejecuta este if porque emos encontrado un zombie
+                if (Partida.zombis[i].pos1[0] == posX && Partida.zombis[i].pos1[1] == posY){
+                    Partida.tauler[posX][posY] = Partida.zombis[i].Descobert(Partida.zombis[i]);
+                    Partida.tauler2[posX][posY] = Partida.zombis[i].MuestraIMG(Partida.zombis[i]);
+                    Partida.mostrar_tauler(Partida.tauler2.length,Partida.tauler2[0].length);
+                    Partida.vidas--;
+                    document.getElementById("vid").innerHTML = Partida.vidas;
+                    //Si los puntos son mas grandes o igual a 100 le restamos los 100 que estan definidos en zombie
+                    if (Partida.punts >= 100){
+                        Partida.punts = Partida.punts - Partida.zombis[i].Puntuaciones();
+                        document.getElementById("punt").innerHTML = Partida.punts;
+                    }
+                    //Si no le ponemos 0 porque quedaria negativo si restamos a -100 si es mas pequeño
+                    else{
+                        Partida.punts = 0;
+                        document.getElementById("punt").innerHTML = Partida.punts;
+                    }
+                    //Si las vidas llegan a 0 pierdes
+                    if (Partida.vidas == 0){
+                        alert("Has perdido wey :(");
+                        perdudes ++;
+                        document.getElementById("perd").innerHTML = perdudes;
+                        crearCookie("perduda",perdudes,25);
+                    }
+                }
+            }
+        }
+        //Else if de gespa que si la encuentra la canvia a mayus i suma 50 puntos a puntuacion
+        else if (Partida.tauler[posX][posY] == "g"){
+            for (let i=0; i < Partida.gespa.length; i++){
+                if (Partida.gespa[i].pos1[0] == posX && Partida.gespa[i].pos1[1] == posY){
+                    Partida.tauler[posX][posY] = Partida.gespa[i].Descobert(Partida.gespa[i]);
+                    Partida.tauler2[posX][posY] = Partida.gespa[i].MuestraIMG2(Partida.gespa[i]);
+                    Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                    Partida.punts = Partida.punts + Partida.gespa[i].Puntuaciones();
                     document.getElementById("punt").innerHTML = Partida.punts;
                 }
-                //Si no le ponemos 0 porque quedaria negativo si restamos a -100 si es mas pequeño
-                else{
-                    Partida.punts = 0;
+            }
+        }
+        //Else if para buscar si es una estrella i sumar 200 puntos i si consigues todas ganas la partida
+        else if (Partida.tauler[posX][posY] == "e"){
+            let ganar = Partida.estrelles.length;
+            for (let i=0; i < Partida.estrelles.length; i++){
+                if (Partida.estrelles[i].pos1[0] == posX && Partida.estrelles[i].pos1[1] == posY){
+                    Partida.tauler[posX][posY] = Partida.estrelles[i].Descobert(Partida.estrelles[i]);
+                    Partida.tauler2[posX][posY] = Partida.estrelles[i].MuestraIMG(Partida.estrelles[i]);
+                    Partida.victoria++;
+                    Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                    if(Partida.victoria == 1){
+                        Partida.mostrar_momento();
+                        function espera(){
+                            Partida.tauler2 = Partida.aux;
+                            Partida.mostrar_tauler(Partida.tauler2.length,Partida.tauler2[0].length);
+                            console.log(Partida.tauler2)
+                        }
+                        setTimeout(espera,5000);
+                    }
+                    Partida.punts = Partida.punts + Partida.estrelles[i].Puntuaciones();
                     document.getElementById("punt").innerHTML = Partida.punts;
                 }
-                //Si las vidas llegan a 0 pierdes
-                if (Partida.vidas == 0){
-                    alert("Has perdido wey :(");
-                    perdudes ++;
-                    document.getElementById("perd").innerHTML = perdudes;
-                    crearCookie("perduda",perdudes,25);
+            }
+            if (Partida.victoria == ganar){
+                alert("Has ganado mi niño");
+                acertades ++;
+                document.getElementById("acert").innerHTML = acertades;
+                crearCookie("acertada",acertades,25);
+            }
+        }
+        //Else if para si encuentras doblar los puntos se doblen.
+        else if (Partida.tauler[posX][posY] == "d"){
+            for (let i=0; i < Partida.doble.length; i++){
+                if (Partida.doble[i].pos1[0] == posX && Partida.doble[i].pos1[1] == posY){
+                    Partida.tauler[posX][posY] = Partida.doble[i].Descobert(Partida.doble[i]);
+                    Partida.tauler2[posX][posY] = Partida.doble[i].MuestraIMG(Partida.doble[i]);
+                    Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                    Partida.punts = Partida.doble[i].Doblar();
+                    console.log(Partida.punts)
+                    document.getElementById("punt").innerHTML = Partida.punts;
                 }
             }
         }
-    }
-    //Else if de gespa que si la encuentra la canvia a mayus i suma 50 puntos a puntuacion
-    else if (Partida.tauler[posX][posY] == "g"){
-        for (let i=0; i < Partida.gespa.length; i++){
-            if (Partida.gespa[i].pos1[0] == posX && Partida.gespa[i].pos1[1] == posY){
-                Partida.tauler[posX][posY] = Partida.gespa[i].Descobert(Partida.gespa[i]);
-                Partida.tauler2[posX][posY] = Partida.gespa[i].MuestraIMG2(Partida.gespa[i]);
-                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                Partida.punts = Partida.punts + Partida.gespa[i].Puntuaciones();
-                document.getElementById("punt").innerHTML = Partida.punts;
-            }
-        }
-    }
-    //Else if para buscar si es una estrella i sumar 200 puntos i si consigues todas ganas la partida
-    else if (Partida.tauler[posX][posY] == "e"){
-        let ganar = Partida.estrelles.length;
-        for (let i=0; i < Partida.estrelles.length; i++){
-            if (Partida.estrelles[i].pos1[0] == posX && Partida.estrelles[i].pos1[1] == posY){
-                Partida.tauler[posX][posY] = Partida.estrelles[i].Descobert(Partida.estrelles[i]);
-                Partida.tauler2[posX][posY] = Partida.estrelles[i].MuestraIMG(Partida.estrelles[i]);
-                Partida.victoria++;
-                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                if(Partida.victoria == 1){
-                    Partida.mostrar_momento();
-                    function espera(){
-                        Partida.tauler2 = Partida.aux;
-                        Partida.mostrar_tauler(Partida.tauler2.length,Partida.tauler2[0].length);
-                        console.log(Partida.tauler2)
-                    }
-                    setTimeout(espera,5000);
-                }
-                Partida.punts = Partida.punts + Partida.estrelles[i].Puntuaciones();
-                document.getElementById("punt").innerHTML = Partida.punts;
-            }
-        }
-        if (Partida.victoria == ganar){
-            alert("Has ganado mi niño");
-            acertades ++;
-            document.getElementById("acert").innerHTML = acertades;
-            crearCookie("acertada",acertades,25);
-        }
-    }
-    //Else if para si encuentras doblar los puntos se doblen.
-    else if (Partida.tauler[posX][posY] == "d"){
-        for (let i=0; i < Partida.doble.length; i++){
-            if (Partida.doble[i].pos1[0] == posX && Partida.doble[i].pos1[1] == posY){
-                Partida.tauler[posX][posY] = Partida.doble[i].Descobert(Partida.doble[i]);
-                Partida.tauler2[posX][posY] = Partida.doble[i].MuestraIMG(Partida.doble[i]);
-                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                Partida.punts = Partida.doble[i].Doblar();
-                console.log(Partida.punts)
-                document.getElementById("punt").innerHTML = Partida.punts;
-            }
-        }
-    }
-    //Else if para si encuentras todos meitat zombis se hagan a la mitat.
-    else if (Partida.tauler[posX][posY] == "m"){
-        for (let i=0; i < Partida.meitat.length; i++){
-            if (Partida.meitat[i].pos1[0] == posX && Partida.meitat[i].pos1[1] == posY){
-                Partida.tauler[posX][posY] = Partida.meitat[i].Descobert(Partida.meitat[i]);
-                Partida.tauler2[posX][posY] = Partida.meitat[i].MuestraIMG(Partida.meitat[i]);
-                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                if (Partida.tauler[Partida.meitat[i].pos1[0]][Partida.meitat[i].pos1[1]] == "M" 
-                && Partida.tauler[Partida.meitat[i].pos2[0]][Partida.meitat[i].pos2[1]] == "M"){
-                    contador_z = [];
-                    for(let i=0;i < Partida.zombis.length;i++){
-                        console.log(Partida.zombis);
-                        let zz = Partida.zombis[i];
-                        if (zz.estat == "z"){
-                            contador_z.push(zz);
+        //Else if para si encuentras todos meitat zombis se hagan a la mitat.
+        else if (Partida.tauler[posX][posY] == "m"){
+            for (let i=0; i < Partida.meitat.length; i++){
+                if (Partida.meitat[i].pos1[0] == posX && Partida.meitat[i].pos1[1] == posY){
+                    Partida.tauler[posX][posY] = Partida.meitat[i].Descobert(Partida.meitat[i]);
+                    Partida.tauler2[posX][posY] = Partida.meitat[i].MuestraIMG(Partida.meitat[i]);
+                    Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                    if (Partida.tauler[Partida.meitat[i].pos1[0]][Partida.meitat[i].pos1[1]] == "M" 
+                    && Partida.tauler[Partida.meitat[i].pos2[0]][Partida.meitat[i].pos2[1]] == "M"){
+                        contador_z = [];
+                        for(let i=0;i < Partida.zombis.length;i++){
+                            console.log(Partida.zombis);
+                            let zz = Partida.zombis[i];
+                            if (zz.estat == "z"){
+                                contador_z.push(zz);
+                            }
                         }
-                    }
-                    largo_z = contador_z.length;
-                    for(let i=0;i < Math.floor(largo_z.length/2);i++){
-                        console.log(contador_z.length);
-                        let r = Math.floor(Math.random()*(contador_z.length - 1));
-                        let pep = contador_z[r];
-                        Partida.tauler[pep.pos1[0]][pep.pos1[1]] = "g";
-                        Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                        QuitarValor(contador_z, pep);
-                        QuitarValor(Partida.zombis, pep);
-                    }
-                    contador_z = [];
-                    alert("Se pusieron a la mitat los zombis");
-                }
-            }
-            if (Partida.meitat[i].pos2[0] == posX && Partida.meitat[i].pos2[1] == posY){
-                Partida.tauler[posX][posY] = Partida.meitat[i].Descobert(Partida.meitat[i]);
-                Partida.tauler2[posX][posY] = Partida.meitat[i].MuestraIMG(Partida.meitat[i]);
-                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                if (Partida.tauler[Partida.meitat[i].pos1[0]][Partida.meitat[i].pos1[1]] == "M" 
-                && Partida.tauler[Partida.meitat[i].pos2[0]][Partida.meitat[i].pos2[1]] == "M"){
-                    contador_z = [];
-                    for(let i=0;i < Partida.zombis.length;i++){
-                        console.log(Partida.zombis);
-                        let zz = Partida.zombis[i];
-                        if (zz.estat == "z"){
-                            contador_z.push(zz);
+                        largo_z = contador_z.length;
+                        for(let i=0;i < Math.floor(largo_z.length/2);i++){
+                            console.log(contador_z.length);
+                            let r = Math.floor(Math.random()*(contador_z.length - 1));
+                            let pep = contador_z[r];
+                            Partida.tauler[pep.pos1[0]][pep.pos1[1]] = "g";
+                            Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                            QuitarValor(contador_z, pep);
+                            QuitarValor(Partida.zombis, pep);
                         }
+                        contador_z = [];
+                        alert("Se pusieron a la mitat los zombis");
                     }
-                    largo_z = contador_z.length;
-                    for(let i=0;i < Math.floor(largo_z/2);i++){
-                        let r = Math.floor(Math.random()*(contador_z.length - 1));
-                        let pep = contador_z[r];
-                        Partida.tauler[pep.pos1[0]][pep.pos1[1]] = "g";
+                }
+                if (Partida.meitat[i].pos2[0] == posX && Partida.meitat[i].pos2[1] == posY){
+                    Partida.tauler[posX][posY] = Partida.meitat[i].Descobert(Partida.meitat[i]);
+                    Partida.tauler2[posX][posY] = Partida.meitat[i].MuestraIMG(Partida.meitat[i]);
+                    Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                    if (Partida.tauler[Partida.meitat[i].pos1[0]][Partida.meitat[i].pos1[1]] == "M" 
+                    && Partida.tauler[Partida.meitat[i].pos2[0]][Partida.meitat[i].pos2[1]] == "M"){
+                        contador_z = [];
+                        for(let i=0;i < Partida.zombis.length;i++){
+                            console.log(Partida.zombis);
+                            let zz = Partida.zombis[i];
+                            if (zz.estat == "z"){
+                                contador_z.push(zz);
+                            }
+                        }
+                        largo_z = contador_z.length;
+                        for(let i=0;i < Math.floor(largo_z/2);i++){
+                            let r = Math.floor(Math.random()*(contador_z.length - 1));
+                            let pep = contador_z[r];
+                            Partida.tauler[pep.pos1[0]][pep.pos1[1]] = "g";
+                            Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                            QuitarValor(contador_z, pep);
+                            QuitarValor(Partida.zombis, pep);
+                        }
+                        contador_z = [];
+                        alert("Se pusieron a la mitat los zombis");
+                    }
+                }
+            }
+        }
+        //Else if para si encuentras todos vidaextra sumen una vida mas.
+        else if (Partida.tauler[posX][posY] == "v"){
+            for (let i=0; i < Partida.vidaex.length; i++){
+                if (Partida.vidaex[i].pos1[0] == posX && Partida.vidaex[i].pos1[1] == posY){
+                    Partida.tauler[posX][posY] = Partida.vidaex[i].Descobert(Partida.vidaex[i]);
+                    Partida.tauler2[posX][posY] = Partida.vidaex[i].MuestraIMG(Partida.vidaex[i]);
+                    Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                    if (Partida.tauler[Partida.vidaex[i].pos1[0]][Partida.vidaex[i].pos1[1]] == "V" 
+                    && Partida.tauler[Partida.vidaex[i].pos2[0]][Partida.vidaex[i].pos2[1]] == "V"
+                    && Partida.tauler[Partida.vidaex[i].pos3[0]][Partida.vidaex[i].pos3[1]] == "V"){
+                        Partida.vidaex[i].Sumarvida();
+                        console.log(Partida.vidas);
                         Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                        QuitarValor(contador_z, pep);
-                        QuitarValor(Partida.zombis, pep);
                     }
-                    contador_z = [];
-                    alert("Se pusieron a la mitat los zombis");
+                }
+                if (Partida.vidaex[i].pos2[0] == posX && Partida.vidaex[i].pos2[1] == posY){
+                    Partida.tauler[posX][posY] = Partida.vidaex[i].Descobert(Partida.vidaex[i]);
+                    Partida.tauler2[posX][posY] = Partida.vidaex[i].MuestraIMG(Partida.vidaex[i]);
+                    Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                    if (Partida.tauler[Partida.vidaex[i].pos1[0]][Partida.vidaex[i].pos1[1]] == "V" 
+                    && Partida.tauler[Partida.vidaex[i].pos2[0]][Partida.vidaex[i].pos2[1]] == "V"
+                    && Partida.tauler[Partida.vidaex[i].pos3[0]][Partida.vidaex[i].pos3[1]] == "V"){
+                        Partida.vidaex[i].Sumarvida();
+                        document.getElementById("vid").innerHTML = Partida.vidas;
+                        Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                    }
+                }
+                if (Partida.vidaex[i].pos3[0] == posX && Partida.vidaex[i].pos3[1] == posY){
+                    Partida.tauler[posX][posY] = Partida.vidaex[i].Descobert(Partida.vidaex[i]);
+                    Partida.tauler2[posX][posY] = Partida.vidaex[i].MuestraIMG(Partida.vidaex[i]);
+                    Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                    if (Partida.tauler[Partida.vidaex[i].pos1[0]][Partida.vidaex[i].pos1[1]] == "V" 
+                    && Partida.tauler[Partida.vidaex[i].pos2[0]][Partida.vidaex[i].pos2[1]] == "V"
+                    && Partida.tauler[Partida.vidaex[i].pos3[0]][Partida.vidaex[i].pos3[1]] == "V"){
+                        Partida.vidaex[i].Sumarvida();
+                        document.getElementById("vid").innerHTML = Partida.vidas;
+                        Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                    }
                 }
             }
         }
-    }
-    //Else if para si encuentras todos vidaextra sumen una vida mas.
-    else if (Partida.tauler[posX][posY] == "v"){
-        for (let i=0; i < Partida.vidaex.length; i++){
-            if (Partida.vidaex[i].pos1[0] == posX && Partida.vidaex[i].pos1[1] == posY){
-                Partida.tauler[posX][posY] = Partida.vidaex[i].Descobert(Partida.vidaex[i]);
-                Partida.tauler2[posX][posY] = Partida.vidaex[i].MuestraIMG(Partida.vidaex[i]);
-                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                if (Partida.tauler[Partida.vidaex[i].pos1[0]][Partida.vidaex[i].pos1[1]] == "V" 
-                && Partida.tauler[Partida.vidaex[i].pos2[0]][Partida.vidaex[i].pos2[1]] == "V"
-                && Partida.tauler[Partida.vidaex[i].pos3[0]][Partida.vidaex[i].pos3[1]] == "V"){
-                    Partida.vidaex[i].Sumarvida();
-                    console.log(Partida.vidas);
-                    Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                }
-            }
-            if (Partida.vidaex[i].pos2[0] == posX && Partida.vidaex[i].pos2[1] == posY){
-                Partida.tauler[posX][posY] = Partida.vidaex[i].Descobert(Partida.vidaex[i]);
-                Partida.tauler2[posX][posY] = Partida.vidaex[i].MuestraIMG(Partida.vidaex[i]);
-                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                if (Partida.tauler[Partida.vidaex[i].pos1[0]][Partida.vidaex[i].pos1[1]] == "V" 
-                && Partida.tauler[Partida.vidaex[i].pos2[0]][Partida.vidaex[i].pos2[1]] == "V"
-                && Partida.tauler[Partida.vidaex[i].pos3[0]][Partida.vidaex[i].pos3[1]] == "V"){
-                    Partida.vidaex[i].Sumarvida();
-                    document.getElementById("vid").innerHTML = Partida.vidas;
-                    Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                }
-            }
-            if (Partida.vidaex[i].pos3[0] == posX && Partida.vidaex[i].pos3[1] == posY){
-                Partida.tauler[posX][posY] = Partida.vidaex[i].Descobert(Partida.vidaex[i]);
-                Partida.tauler2[posX][posY] = Partida.vidaex[i].MuestraIMG(Partida.vidaex[i]);
-                Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                if (Partida.tauler[Partida.vidaex[i].pos1[0]][Partida.vidaex[i].pos1[1]] == "V" 
-                && Partida.tauler[Partida.vidaex[i].pos2[0]][Partida.vidaex[i].pos2[1]] == "V"
-                && Partida.tauler[Partida.vidaex[i].pos3[0]][Partida.vidaex[i].pos3[1]] == "V"){
-                    Partida.vidaex[i].Sumarvida();
-                    document.getElementById("vid").innerHTML = Partida.vidas;
-                    Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
-                }
-            }
+        else{
+            alert("Aquesta casella ja esta destapada");
         }
-    }
 
-    function QuitarValor ( arr, item ) {
-        var i = arr.indexOf( item );
-        arr.splice( i, 1 );
+        function QuitarValor ( arr, item ) {
+            var i = arr.indexOf( item );
+            arr.splice( i, 1 );
+        }
+        document.getElementById("z1").value = "";
+        document.getElementById("z2").value = "";
     }
-    document.getElementById("z1").value = "";
-    document.getElementById("z2").value = "";
 }
 
 let acertades = 0;
