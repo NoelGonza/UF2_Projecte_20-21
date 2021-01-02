@@ -245,6 +245,8 @@ let Partida = {
         this.doble = [];
         this.meitat = [];
         this.vidaex = [];
+        this.mostrado= [];
+        this.aux= [];
         this.vidas = 3;
         this.punts = 0;
         this.victoria = 0;
@@ -338,6 +340,7 @@ function buscar_obj(posX,posY){
                     //Si las vidas llegan a 0 pierdes
                     if (Partida.vidas == 0){
                         alert("Has perdido wey :(");
+                        Partida.mostrar_momento();
                         perdudes ++;
                         document.getElementById("perd").innerHTML = perdudes;
                         crearCookie("perduda",perdudes,25);
@@ -373,7 +376,7 @@ function buscar_obj(posX,posY){
                             Partida.mostrar_tauler(Partida.tauler2.length,Partida.tauler2[0].length);
                             console.log(Partida.tauler2)
                         }
-                        setTimeout(espera,5000);
+                        setTimeout(espera,300);
                     }
                     Partida.punts = Partida.punts + Partida.estrelles[i].Puntuaciones();
                     document.getElementById("punt").innerHTML = Partida.punts;
@@ -558,6 +561,7 @@ function comprobarCookie(clave) {
 
 function abandonar_partida(){
     alert("Has abandonat la partida.");
+        Partida.mostrar_momento();
         abandonades ++;
         document.getElementById("aban").innerHTML = abandonades;
         crearCookie("abandonada",abandonades,25);
