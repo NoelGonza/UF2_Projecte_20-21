@@ -15,8 +15,12 @@ let Partida = {
     contador_vid: 0,
     w: 100,
     h: 100,
+    x: 0,
+    y: 0,
 
     inicialitzar_tauler: function(ample,llarg){
+        this.x = ample;
+        this.y = llarg;
         if (ample > 5 || llarg > 5){
             let reducir = Math.floor((parseInt(ample) + parseInt(llarg)) / 2);
             console.log(reducir);
@@ -261,6 +265,10 @@ let Partida = {
         this.punts = 0;
         this.victoria = 0;
         this.contador_vid = 0;
+        this.w = 100;
+        this.h = 100;
+        this.x = 0;
+        this.y = 0;
     },
 
     iniciar: function(mida1,mida2){
@@ -279,7 +287,6 @@ let Partida = {
 var elDiv = document.getElementById("tablero");
 elDiv.onclick = function(event){
     var elide = event.target;
-    document.getElementById("owo").innerHTML = "Esta id esta ocupado: "+ elide.id;
     let palabro = [];
     palabro = elide.id.split("");
     let PosX;
@@ -397,6 +404,10 @@ function buscar_obj(posX,posY){
                 acertades ++;
                 document.getElementById("acert").innerHTML = acertades;
                 crearCookie("acertada",acertades,25);
+                if (localStorage.getItem(""+ (Partida.x) +"-"+ (Partida.y) +"") == null || localStorage.getItem(""+ (Partida.x) +"-"+ (Partida.y) +"") < Partida.punts){
+                    localStorage.setItem(""+ (Partida.x) +"-"+ (Partida.y) +"", Partida.punts);
+                    alert("Has superado la puntuación máxima de este tablero");
+                }
             }
         }
         //Else if para si encuentras doblar los puntos se doblen.
@@ -577,3 +588,41 @@ function abandonar_partida(){
         crearCookie("abandonada",abandonades,25);
 }
 document.getElementById("abandona").addEventListener("click", abandonar_partida);
+
+var ventana1 = null;
+
+function ventanas(){
+    ventana1 = window.open("finestra1s.html", "finestra1", "top=0, left=700, width=710, height=570");
+    ventana1.document.write("<p id='prueba'></p>");
+}
+
+document.getElementById("stats").addEventListener("click", tauler_stats);
+
+function tauler_stats(){
+    ventanas();
+    let tablero = "<table border='' cellspacing='0'>";
+    for (let i=0;i < 16; i++){
+        tablero += "<tr>";
+        for (let j=0;j < 16; j++){
+            tablero += "<td>"+ (i+5) +"-"+ (j+5) +"</td>";
+        }
+        tablero +="</tr>";
+        tablero += "<tr>";
+        for (let j=0;j < 16; j++){
+            tablero += "<td id='"+ (i+5) +"-"+ (j+5) +"'></td>";
+        }
+        tablero +="</tr>";
+    }
+    tablero += "</table>";
+    ventana1.document.getElementById("prueba").innerHTML = tablero;
+    for (let i=0;i < 16; i++) {
+        for (let j=0;j < 16; j++) {
+            if (localStorage.getItem(""+ (i+5) +"-"+ (j+5) +"") != null){
+                ventana1.document.getElementById(""+ (i+5) +"-"+ (j+5) +"").innerHTML = localStorage.getItem(""+ (i+5) +"-"+ (j+5) +"");
+            }
+            else{
+                ventana1.document.getElementById(""+ (i+5) +"-"+ (j+5) +"").innerHTML = "<p>0</p>";
+            }
+        }       
+    }
+}
