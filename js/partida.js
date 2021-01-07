@@ -493,7 +493,7 @@ function buscar_obj(posX,posY){
                             QuitarValor(Partida.zombis, pep);
                         }
                         contador_z = [];
-                        alert("S'han posat a la meitat els zombis");
+                        alert("S'han reduït a la meitat els zombis");
                     }
                 }
                 if (Partida.meitat[i].pos2[0] == posX && Partida.meitat[i].pos2[1] == posY){
@@ -519,7 +519,7 @@ function buscar_obj(posX,posY){
                             QuitarValor(Partida.zombis, pep);
                         }
                         contador_z = [];
-                        alert("S'han posat a la meitat els zombis");
+                        alert("S'han reduït a la meitat els zombis");
                     }
                 }
             }
@@ -639,7 +639,7 @@ document.getElementById("abandona").addEventListener("click", abandonar_partida)
 var ventana1 = null;
 function ventanas(){
     ventana1 = window.open("finestra1s.html", "finestra1", "top=0, left=700, width=660, height=765");
-    ventana1.document.write("<h2 align='center'>Maxima puntuación por tablero</h2>");
+    ventana1.document.write("<h2 align='center'>Maxima puntuacio per tauler</h2>");
     ventana1.document.write("<p id='prueba'></p>");
 }
 
