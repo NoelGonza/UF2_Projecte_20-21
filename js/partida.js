@@ -1,4 +1,5 @@
 let Partida = {
+    //Definim totes les variables globals que farem servir dintre de Partida
     tauler: [],
     tauler2: [],
     zombis: [],
@@ -18,6 +19,11 @@ let Partida = {
     x: 0,
     y: 0,
 
+    /* Inicialitzador del tauler on fem un if per reduir la mida del tauler si el numero de casellas es major a 5
+    i un for que recorreix la I i la J per omplir les matrius que em fet, guardem les gespes en una array apart,
+    en tauler guardem apartir del objecte creat de gespa el estat que es g per fer comprovacions més endevant,
+    tauler2 el fem servir per mostrar les imatges de cada objecte i mostrado tambe guardem les imatges per utilitzar
+    la funcio de al tocar la primera estrella mostri tot el tauler desxifrat */
     inicialitzar_tauler: function(ample,llarg){
         this.x = ample;
         this.y = llarg;
@@ -34,7 +40,6 @@ let Partida = {
             this.tauler2[i]=[];
             this.mostrado[i]=[];
             for (let j=0;j < llarg; j++){
-                //Definimos gespa i la guardamos en la array gespa i la añadimos en la array tauler tambien
                 var gespa1 = new Gespa(null,null, [i,j],"g",50,"<img src='img/gespa.png' id='"+i+"-"+j+"' height='"+ this.h +"px' width='"+ this.w +"px'>");
                 this.gespa.push(gespa1);
                 var posicionar = gespa1.ModificaArray();
@@ -46,6 +51,9 @@ let Partida = {
         }
     },
 
+    /* mostrar_tauler fem una variable on concatenem text html que en aquest cas el fem atraves de divs per crear
+    el tauler amb id i tambe dintre de cada div del segon for posem la imatge que tingui la posicio del tauler2 
+    i printem el resultat en el html del index */
     mostrar_tauler: function(num1,num2){
         let tablero = "<div id='tau'>";
         for (let i=0;i < num1; i++){
@@ -59,14 +67,23 @@ let Partida = {
         document.getElementById("tablero").innerHTML = tablero;
     },
 
+    /* Atraves de les mides que ens donan al crear el tauler creem els objectes on tenim dos variables una per saber el
+    porcentatge de objectes que podem fer per tenir el 25% de les caselles de recompenses i un altre 25% de zombis,
+    despres tenim una variable apart per estrellas per posar tantes estrelles com el numero de filas o columnas te
+    el tauler. 
+    A continuació creem els objectes amb les midas i els porcentatges*/
     crear_objetos: function(mida1, mida2){
-        porcentaje = Math.round((mida1 * mida2)/4);
-        estrellas = Math.round((parseInt(mida1)+parseInt(mida2))/2);
+        let porcentaje = Math.round((mida1 * mida2)/4);
+        let estrellas = Math.round((parseInt(mida1)+parseInt(mida2))/2);
         this.crear_Recompensas(mida1,mida2,porcentaje);
         this.crear_zombies(mida1,mida2,porcentaje);
         this.crear_estrellas(mida1,mida2,estrellas);       
     },
 
+    /* Aquesta funcio es per crear la cuantitat de recompenses que es poden fer, amb un do while que comproba que mentres
+    el porcentatge no sigui 0 segeixi recorrent, dintre fem 3 if que comproban si la variable Por25 es major o igual al
+    numero indicat executa una altra funcio per crear el objecte en concret i li resta a la variable el numero definit 
+    dintre del if i salta al seguent if fins terminar */
     crear_Recompensas: function(PosX,PosY,Por25){
         do{
             if(Por25 >= 3){
@@ -84,6 +101,9 @@ let Partida = {
         }while(Por25 != 0);
     },
 
+    /* Aquesta funcio es per crear el objecte zombi, primer fem un for que vagi recorrent mentres sigui mes petit que Por25,
+    dintre fem un do while que agafa una posicio random sempre i cuan estiguin ocupades per una g, despres guardem
+    en la array de zombis el objecte creat i canviem en tauler la lletra del estat del zombi en la posicio random */
     crear_zombies: function(PosX,PosY,Por25){
         for (let i=0;i < Por25;i++){
             do{
@@ -98,6 +118,10 @@ let Partida = {
         }
     },
 
+    /* Aquesta funcio es per crear el objecte estrella, primer fem un for que vagi recorrent mentres sigui mes petit que
+    Por25, dintre fem un do while que agafa una posicio random sempre i cuan estiguin ocupades per una g, despres
+    guardem en la array de estrelles el objecte creat i canviem en tauler la lletra del estat del estrella en la posicio
+    random */
     crear_estrellas: function(PosX,PosY,Por25){
         for (let i=0;i < Por25;i++){
             do{
@@ -112,6 +136,10 @@ let Partida = {
         }
     },
 
+    /* Aquesta funcio es per crear el objecte Doblepunts, primer fem un for que vagi recorrent mentres sigui mes petit que
+    Por25, dintre fem un do while que agafa una posicio random sempre i cuan estiguin ocupades per una g, despres
+    guardem en la array de doble el objecte creat i canviem en tauler la lletra del estat de doblarpuntuacio en la posicio
+    random */
     crear_DoblePuntuacion: function(PosX,PosY,Por25){
         for (let i=0;i < Por25;i++){
             do{
@@ -125,7 +153,9 @@ let Partida = {
             this.tauler[PosX][PosY] = cambia;
         }
     },
-
+    /* Per crear el objecte de la meitat de zombis fem servir un boleano per si es true o fara en horitzontal i si no o fara
+    en vertical, dintre agafem dos posicions random que estiguin ocupades per una g i introduim el objecte MeitatZombi en
+    el seu array i posem en les dues posicions el estat que seria m en tauler*/
     crear_Meitat: function(PosX,PosY){
         direccion = true;
         direccion = (Math.random() < 0.5);
@@ -157,6 +187,9 @@ let Partida = {
         }
     },
 
+    /* Per crear el objecte de vidaextra fem servir un boleano per si es true o fara en horitzontal i si no o fara
+    en vertical, dintre agafem tres posicions random que estiguin ocupades per una g i introduim el objecte Vidaextra en
+    el seu array i posem en les tres posicions el estat que seria v en tauler*/
     crear_VidaExtra: function(PosX,PosY){
         direccion = true;
         direccion = (Math.random() < 0.5);
@@ -189,6 +222,10 @@ let Partida = {
         }
     },
 
+    /* Aquesta funcio recorreix mostrado amb dos for i amb if que comproba la lletra que hi ha en la posicio i canvia
+    el contingut de la posicio agafada per la imatge de l'objecte de la lletra especificada fent un for que recorreix
+    l'array on em guardat el objecte en concret. El resultat es tot el tauler amb totes les caselles destapades en img
+    i que fem mostrar en el tauler*/
     mostrar_momento: function(){
         for (let i=0;i < this.tauler.length; i++){
             for (let j=0;j < this.tauler[0].length; j++){
@@ -250,6 +287,7 @@ let Partida = {
         this.mostrar_tauler(this.tauler2.length,this.tauler2[0].length);
     },
 
+    /* Aquesta funcio es per reiniciar totes les variables globals de Partida */
     reiniciar_valores: function(){
         this.tauler = [];
         this.tauler2 = [];
@@ -271,8 +309,8 @@ let Partida = {
         this.y = 0;
     },
 
+    /* La funcio iniciar serveix per começar la partida */
     iniciar: function(mida1,mida2){
-        //Ponemos los valores de vida i puntos
         this.reiniciar_valores();
         document.getElementById("vid").innerHTML = this.vidas;
         document.getElementById("punt").innerHTML = this.punts;
@@ -284,6 +322,9 @@ let Partida = {
     }
 }
 
+/* elDiv sirveix per cuan fas click dintre del tauler agafi la id de la casella que ha clicat el usuari
+i depenent de on esta situat el gio i quant medeix la array que conte la id separada de un valor a un,
+guarda les posicions en PosX i PosY i crida a la funcio buscar_obj amb aquestes posicions */
 var elDiv = document.getElementById("tablero");
 elDiv.onclick = function(event){
     var elide = event.target;
@@ -296,65 +337,69 @@ elDiv.onclick = function(event){
         if(palabro[2] == "-" && palabro.length == 4){
             PosX = palabro[0] + palabro[1];
             PosY = palabro[3];
-            console.log(PosX+"-"+PosY);
             buscar_obj(PosX,PosY);
         }
         else if(palabro[2] == "-" && palabro.length == 5){
             PosX = palabro[0] + palabro[1];
             PosY = palabro[3] + palabro[4];
-            console.log(PosX+"-"+PosY);
             buscar_obj(PosX,PosY);
         }
         else if(palabro[1] == "-" && palabro.length == 4){
             PosX = palabro[0];
             PosY = palabro[2] + palabro[3];
-            console.log(PosX+"-"+PosY);
             buscar_obj(PosX,PosY);
         }
     }
     else{
         PosX = palabro[0];
         PosY = palabro[2];
-        console.log(PosX+"-"+PosY);
         buscar_obj(PosX,PosY);
     }
 };
 
+//Crida a la funcio buscar_obj al clicar al boto amb id busca
 var buscar = document.getElementById("busca");
 buscar.addEventListener("click",buscar_obj);
 
+/* Aquesta funcio busca el objecte que hi ha asignat en la casella de les coordenades que posem */
 function buscar_obj(posX,posY){
     let boleo = true;
+    /* Primer fem un if que comproba que si en posar les coordenades de manera manual hi ha contingut guardem en posX
+    i posY els valors que tinguin */
     if(document.getElementById("z1").value != "" && document.getElementById("z1").value != ""){
         posX = document.getElementById("z1").value;
         posY = document.getElementById("z2").value;
-        console.log(posX+"-"+posY);
     }
+    /* Despres fem un if que si les dos posisions son undefined es que aquesta casella ya a estat descoberta i el bolea
+    que em fet al principi el pasem a false aixo fara que no sexecuti la cerca de la casella ja que esta destapada*/
     if(posX == undefined && posY == undefined){
         alert("Aquesta casella ja esta destapada");
         boleo = false;
     }
+    /* Si el bolea es true s'executa tot el progrma que hi ha dintre per buscar la casella i fer els canvis corresponents
+    en cada tipus d'objecte que trobi */
     if(boleo == true){
         if (Partida.tauler[posX][posY] == "z"){
             for (let i=0; i < Partida.zombis.length; i++) {
-                //Restamos una vida cada vez que se ejecuta este if porque emos encontrado un zombie
+                //Restem una vida cada vegada que s'executa aquest if perque em trobat un zombie
                 if (Partida.zombis[i].pos1[0] == posX && Partida.zombis[i].pos1[1] == posY){
                     Partida.tauler[posX][posY] = Partida.zombis[i].Descobert(Partida.zombis[i]);
                     Partida.tauler2[posX][posY] = Partida.zombis[i].MuestraIMG(Partida.zombis[i]);
                     Partida.mostrar_tauler(Partida.tauler2.length,Partida.tauler2[0].length);
                     Partida.vidas--;
                     document.getElementById("vid").innerHTML = Partida.vidas;
-                    //Si los puntos son mas grandes o igual a 100 le restamos los 100 que estan definidos en zombie
+                    //Si els punts son més grans o igual a 100 li restem els 100 que estan definits en zombie
                     if (Partida.punts >= 100){
                         Partida.punts = Partida.punts - Partida.zombis[i].Puntuaciones();
                         document.getElementById("punt").innerHTML = Partida.punts;
                     }
-                    //Si no le ponemos 0 porque quedaria negativo si restamos a -100 si es mas pequeño
+                    //Si no els posem els punts a 0 perque quedaria negatiu si restem a -100 si es més petit
                     else{
                         Partida.punts = 0;
                         document.getElementById("punt").innerHTML = Partida.punts;
                     }
-                    //Si las vidas llegan a 0 pierdes
+                    /*Si les vides arriban a 0 perds i surt un prompt de que has perdut, tambe mostrara el tauler destapat
+                    i es sumara en les estadistiques una partida perduda*/
                     if (Partida.vidas == 0){
                         alert("Has perdido wey :(");
                         Partida.mostrar_momento();
@@ -365,7 +410,7 @@ function buscar_obj(posX,posY){
                 }
             }
         }
-        //Else if de gespa que si la encuentra la canvia a mayus i suma 50 puntos a puntuacion
+        //Else if de gespa que si la troba la canvia a mayus i suma 50 punts a puntuacio
         else if (Partida.tauler[posX][posY] == "g"){
             for (let i=0; i < Partida.gespa.length; i++){
                 if (Partida.gespa[i].pos1[0] == posX && Partida.gespa[i].pos1[1] == posY){
@@ -377,7 +422,7 @@ function buscar_obj(posX,posY){
                 }
             }
         }
-        //Else if para buscar si es una estrella i sumar 200 puntos i si consigues todas ganas la partida
+        //Else if per a buscar si es una estrella i sumar 200 punts i si consegueixes totes guanyas la partida
         else if (Partida.tauler[posX][posY] == "e"){
             let ganar = Partida.estrelles.length;
             for (let i=0; i < Partida.estrelles.length; i++){
@@ -386,6 +431,8 @@ function buscar_obj(posX,posY){
                     Partida.tauler2[posX][posY] = Partida.estrelles[i].MuestraIMG(Partida.estrelles[i]);
                     Partida.victoria++;
                     Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
+                    /* Si es destapa la primera casella es mostrara durant 300milisegons el tauler destapat i despres
+                    tornara a estar com estava abans de premer la primera estrella pero amb aquesta ja mostrada */
                     if(Partida.victoria == 1){
                         Partida.mostrar_momento();
                         function espera(){
@@ -410,7 +457,7 @@ function buscar_obj(posX,posY){
                 }
             }
         }
-        //Else if para si encuentras doblar los puntos se doblen.
+        //Else if para si trobas doblar la puntuacio es dobla la puntuacio.
         else if (Partida.tauler[posX][posY] == "d"){
             for (let i=0; i < Partida.doble.length; i++){
                 if (Partida.doble[i].pos1[0] == posX && Partida.doble[i].pos1[1] == posY){
@@ -423,7 +470,11 @@ function buscar_obj(posX,posY){
                 }
             }
         }
-        //Else if para si encuentras todos meitat zombis se hagan a la mitat.
+        /* Else if para si trobas tots meitat zombis es posin a la meitat.
+        Per fer-ho fem un if que comprova les posicions de meitat i fa els canvis en el tauler i si les dos posicions
+        arriben a estar destapades fa un contador on amb un for guarda els zombis que no estan destapats i fa un for
+        de la meitat de la array que agafa una posicio random i la canvia per una gespa i treu els valors del contador
+        i de Partida.zombis perque ja no existeix */
         else if (Partida.tauler[posX][posY] == "m"){
             for (let i=0; i < Partida.meitat.length; i++){
                 if (Partida.meitat[i].pos1[0] == posX && Partida.meitat[i].pos1[1] == posY){
@@ -432,7 +483,7 @@ function buscar_obj(posX,posY){
                     Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                     if (Partida.tauler[Partida.meitat[i].pos1[0]][Partida.meitat[i].pos1[1]] == "M" 
                     && Partida.tauler[Partida.meitat[i].pos2[0]][Partida.meitat[i].pos2[1]] == "M"){
-                        contador_z = [];
+                        let contador_z = [];
                         for(let i=0;i < Partida.zombis.length;i++){
                             console.log(Partida.zombis);
                             let zz = Partida.zombis[i];
@@ -440,7 +491,7 @@ function buscar_obj(posX,posY){
                                 contador_z.push(zz);
                             }
                         }
-                        largo_z = contador_z.length;
+                        let largo_z = contador_z.length;
                         for(let i=0;i < Math.floor(largo_z.length/2);i++){
                             console.log(contador_z.length);
                             let r = Math.floor(Math.random()*(contador_z.length - 1));
@@ -460,7 +511,7 @@ function buscar_obj(posX,posY){
                     Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                     if (Partida.tauler[Partida.meitat[i].pos1[0]][Partida.meitat[i].pos1[1]] == "M" 
                     && Partida.tauler[Partida.meitat[i].pos2[0]][Partida.meitat[i].pos2[1]] == "M"){
-                        contador_z = [];
+                        let contador_z = [];
                         for(let i=0;i < Partida.zombis.length;i++){
                             console.log(Partida.zombis);
                             let zz = Partida.zombis[i];
@@ -468,7 +519,7 @@ function buscar_obj(posX,posY){
                                 contador_z.push(zz);
                             }
                         }
-                        largo_z = contador_z.length;
+                        let largo_z = contador_z.length;
                         for(let i=0;i < Math.floor(largo_z/2);i++){
                             let r = Math.floor(Math.random()*(contador_z.length - 1));
                             let pep = contador_z[r];
@@ -483,7 +534,7 @@ function buscar_obj(posX,posY){
                 }
             }
         }
-        //Else if para si encuentras todos vidaextra sumen una vida mas.
+        //Else if de si tobas totes les videsextra es suma una vida més fent comprobacions amb if.
         else if (Partida.tauler[posX][posY] == "v"){
             for (let i=0; i < Partida.vidaex.length; i++){
                 if (Partida.vidaex[i].pos1[0] == posX && Partida.vidaex[i].pos1[1] == posY){
@@ -524,19 +575,23 @@ function buscar_obj(posX,posY){
                 }
             }
         }
+        /* Si totes les posibilitats no funcionan es que la casella ja esta destapada */
         else{
             alert("Aquesta casella ja esta destapada");
         }
 
+        /* Aquesta funcio elimina els valors que indiquis */
         function QuitarValor ( arr, item ) {
             var i = arr.indexOf( item );
             arr.splice( i, 1 );
         }
+        /* Per no crear errors s'elimina el contingut de dintre de les coordenades manuals */
         document.getElementById("z1").value = "";
         document.getElementById("z2").value = "";
     }
 }
 
+/* Creacio de les cookies */
 let acertades = 0;
 let perdudes = 0;
 let abandonades = 0;
@@ -550,7 +605,7 @@ function crearCookie(clave, valor, data) {
     document.cookie = clave + "=" + valor + ";" + expires;
 }
 
-//FUNCION PARA OBTENER EL VALOR DE UNA COOKIE
+//FUNCIO PER OBTENIR EL VALOR D'UNA COOKIE
 function obtenerCookie(clave) {
     var name = clave + "=";
     var ca = document.cookie.split(';');
@@ -562,8 +617,8 @@ function obtenerCookie(clave) {
     return "";
 }
 
-/*FUNCION PARA COMPROBAR SI EXISTE UNA COOKIE, SI NO EXISTE SE CREAN TODAS Y SE ASIGNAN Y SI
-EXISTE ASIGNA LOS VALORES DE LAS COOKIES*/ 
+/*FUNCIO PER COMPROVAR SI EXISTEIX UNA COOKIE, SI NO EXISTEIX ES CREAN TOTES Y S'ASIGNAN Y SI
+EXISTEIX ASIGNA ELS VALORS DE LES COOKIES*/ 
 function comprobarCookie(clave) {
     var clave = obtenerCookie(clave);
     if (clave!="") {
@@ -580,6 +635,8 @@ function comprobarCookie(clave) {
     }
 }
 
+/* Funcio per abandonar la partida on surt un alert de que has abandonat i mostrara tot el contingut del tauler i es
+sumara una partida abandonada */
 function abandonar_partida(){
     alert("Has abandonat la partida.");
         Partida.mostrar_momento();
@@ -589,8 +646,8 @@ function abandonar_partida(){
 }
 document.getElementById("abandona").addEventListener("click", abandonar_partida);
 
+/* Creació d'una finestra filla per les estadistiques */
 var ventana1 = null;
-
 function ventanas(){
     ventana1 = window.open("finestra1s.html", "finestra1", "top=0, left=700, width=710, height=570");
     ventana1.document.write("<p id='prueba'></p>");
@@ -598,6 +655,7 @@ function ventanas(){
 
 document.getElementById("stats").addEventListener("click", tauler_stats);
 
+/* Guardem els resultats i creem el tauler on es guarden i el mostrem */
 function tauler_stats(){
     ventanas();
     let tablero = "<table border='' cellspacing='0'>";
