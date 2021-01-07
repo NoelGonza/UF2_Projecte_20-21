@@ -649,7 +649,7 @@ document.getElementById("abandona").addEventListener("click", abandonar_partida)
 /* Creació d'una finestra filla per les estadistiques */
 var ventana1 = null;
 function ventanas(){
-    ventana1 = window.open("finestra1s.html", "finestra1", "top=0, left=700, width=710, height=570");
+    ventana1 = window.open("finestra1s.html", "finestra1", "top=0, left=700, width=710, height=707");
     ventana1.document.write("<p id='prueba'></p>");
 }
 
