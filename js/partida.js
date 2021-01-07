@@ -441,6 +441,7 @@ function buscar_obj(posX,posY){
             }
             if (Partida.victoria == ganar){
                 alert("Has guanyat la partida :)");
+                Partida.mostrar_momento();
                 acertades ++;
                 document.getElementById("acert").innerHTML = acertades;
                 crearCookie("acertada",acertades,25);
@@ -650,7 +651,7 @@ function tauler_stats(){
     for (let i=0;i < 16; i++){
         tablero += "<tr>";
         for (let j=0;j < 16; j++){
-            tablero += "<td bgcolor='green'>"+ (i+5) +"-"+ (j+5) +"</td>";
+            tablero += "<td bgcolor='green'><b>"+ (i+5) +"-"+ (j+5) +"</b></td>";
         }
         tablero +="</tr>";
         tablero += "<tr>";
