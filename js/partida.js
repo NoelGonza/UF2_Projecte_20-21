@@ -29,9 +29,7 @@ let Partida = {
         this.y = llarg;
         if (ample > 5 || llarg > 5){
             let reducir = Math.floor((parseInt(ample) + parseInt(llarg)) / 2);
-            console.log(reducir);
             pcent = (500 / reducir);
-            console.log(pcent);
             this.w = pcent;
             this.h = pcent;
         }
@@ -159,7 +157,6 @@ let Partida = {
     crear_Meitat: function(PosX,PosY){
         direccion = true;
         direccion = (Math.random() < 0.5);
-        console.log(direccion);
         if (direccion){
             do{
                 PosX = Math.floor(Math.random()*(this.tauler.length));
@@ -179,7 +176,6 @@ let Partida = {
             }
             while (this.tauler[PosX][PosY] !== "g" || this.tauler[PosX+1][PosY] !== "g");
             var pivote = new Meitatzombi(null,[PosX+1,PosY], [PosX,PosY],"m",null,"<img src='img/meitatz.png' height='"+ this.h +"px' width='"+ this.w +"px'>");
-            console.log(pivote);
             this.meitat.push(pivote);
             var cambia = pivote.ModificaArray();
             this.tauler[PosX][PosY] = cambia;
@@ -193,7 +189,6 @@ let Partida = {
     crear_VidaExtra: function(PosX,PosY){
         direccion = true;
         direccion = (Math.random() < 0.5);
-        console.log(direccion);
         if (direccion){
             do{
                 PosX = Math.floor(Math.random()*(this.tauler.length));
@@ -332,7 +327,6 @@ elDiv.onclick = function(event){
     palabro = elide.id.split("");
     let PosX;
     let PosY;
-    console.log(palabro)
     if(palabro.length > 3){
         if(palabro[2] == "-" && palabro.length == 4){
             PosX = palabro[0] + palabro[1];
@@ -438,7 +432,6 @@ function buscar_obj(posX,posY){
                         function espera(){
                             Partida.tauler2 = Partida.aux;
                             Partida.mostrar_tauler(Partida.tauler2.length,Partida.tauler2[0].length);
-                            console.log(Partida.tauler2)
                         }
                         setTimeout(espera,300);
                     }
@@ -465,7 +458,6 @@ function buscar_obj(posX,posY){
                     Partida.tauler2[posX][posY] = Partida.doble[i].MuestraIMG(Partida.doble[i]);
                     Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                     Partida.punts = Partida.doble[i].Doblar();
-                    console.log(Partida.punts)
                     document.getElementById("punt").innerHTML = Partida.punts;
                 }
             }
@@ -485,7 +477,6 @@ function buscar_obj(posX,posY){
                     && Partida.tauler[Partida.meitat[i].pos2[0]][Partida.meitat[i].pos2[1]] == "M"){
                         let contador_z = [];
                         for(let i=0;i < Partida.zombis.length;i++){
-                            console.log(Partida.zombis);
                             let zz = Partida.zombis[i];
                             if (zz.estat == "z"){
                                 contador_z.push(zz);
@@ -493,7 +484,6 @@ function buscar_obj(posX,posY){
                         }
                         let largo_z = contador_z.length;
                         for(let i=0;i < Math.floor(largo_z.length/2);i++){
-                            console.log(contador_z.length);
                             let r = Math.floor(Math.random()*(contador_z.length - 1));
                             let pep = contador_z[r];
                             Partida.tauler[pep.pos1[0]][pep.pos1[1]] = "g";
@@ -513,7 +503,6 @@ function buscar_obj(posX,posY){
                     && Partida.tauler[Partida.meitat[i].pos2[0]][Partida.meitat[i].pos2[1]] == "M"){
                         let contador_z = [];
                         for(let i=0;i < Partida.zombis.length;i++){
-                            console.log(Partida.zombis);
                             let zz = Partida.zombis[i];
                             if (zz.estat == "z"){
                                 contador_z.push(zz);
@@ -545,7 +534,6 @@ function buscar_obj(posX,posY){
                     && Partida.tauler[Partida.vidaex[i].pos2[0]][Partida.vidaex[i].pos2[1]] == "V"
                     && Partida.tauler[Partida.vidaex[i].pos3[0]][Partida.vidaex[i].pos3[1]] == "V"){
                         Partida.vidaex[i].Sumarvida();
-                        console.log(Partida.vidas);
                         Partida.mostrar_tauler(Partida.tauler.length,Partida.tauler[0].length);
                     }
                 }
@@ -658,7 +646,7 @@ document.getElementById("stats").addEventListener("click", tauler_stats);
 /* Guardem els resultats i creem el tauler on es guarden i el mostrem */
 function tauler_stats(){
     ventanas();
-    let tablero = "<table border='' cellspacing='0'>";
+    let tablero = "<link rel='stylesheet' href='css/ventana.css'><table border='' cellspacing='0'>";
     for (let i=0;i < 16; i++){
         tablero += "<tr>";
         for (let j=0;j < 16; j++){
