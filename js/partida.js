@@ -309,7 +309,6 @@ let Partida = {
         this.reiniciar_valores();
         document.getElementById("vid").innerHTML = this.vidas;
         document.getElementById("punt").innerHTML = this.punts;
-        this.max_tauler = mida1 * mida2;
         this.inicialitzar_tauler(mida1,mida2);
         this.mostrar_tauler(mida1,mida2);
         this.crear_objetos(mida1,mida2);
