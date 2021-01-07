@@ -638,7 +638,7 @@ document.getElementById("abandona").addEventListener("click", abandonar_partida)
 /* Creació d'una finestra filla per les estadistiques */
 var ventana1 = null;
 function ventanas(){
-    ventana1 = window.open("finestra1s.html", "finestra1", "top=0, left=700, width=660, height=745");
+    ventana1 = window.open("finestra1s.html", "finestra1", "top=0, left=700, width=660, height=765");
     ventana1.document.write("<h2 align='center'>Maxima puntuación por tablero</h2>");
     ventana1.document.write("<p id='prueba'></p>");
 }
