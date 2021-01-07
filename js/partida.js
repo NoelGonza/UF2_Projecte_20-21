@@ -395,7 +395,7 @@ function buscar_obj(posX,posY){
                     /*Si les vides arriban a 0 perds i surt un prompt de que has perdut, tambe mostrara el tauler destapat
                     i es sumara en les estadistiques una partida perduda*/
                     if (Partida.vidas == 0){
-                        alert("Has perdido wey :(");
+                        alert("Has perdut la partida :(");
                         Partida.mostrar_momento();
                         perdudes ++;
                         document.getElementById("perd").innerHTML = perdudes;
@@ -440,13 +440,13 @@ function buscar_obj(posX,posY){
                 }
             }
             if (Partida.victoria == ganar){
-                alert("Has ganado mi niño");
+                alert("Has guanyat la partida :)");
                 acertades ++;
                 document.getElementById("acert").innerHTML = acertades;
                 crearCookie("acertada",acertades,25);
                 if (localStorage.getItem(""+ (Partida.x) +"-"+ (Partida.y) +"") == null || localStorage.getItem(""+ (Partida.x) +"-"+ (Partida.y) +"") < Partida.punts){
                     localStorage.setItem(""+ (Partida.x) +"-"+ (Partida.y) +"", Partida.punts);
-                    alert("Has superado la puntuación máxima de este tablero");
+                    alert("Has superat la puntuació máxima d'aquest tauler");
                 }
             }
         }
@@ -492,7 +492,7 @@ function buscar_obj(posX,posY){
                             QuitarValor(Partida.zombis, pep);
                         }
                         contador_z = [];
-                        alert("Se pusieron a la mitat los zombis");
+                        alert("S'han posat a la meitat els zombis");
                     }
                 }
                 if (Partida.meitat[i].pos2[0] == posX && Partida.meitat[i].pos2[1] == posY){
@@ -518,7 +518,7 @@ function buscar_obj(posX,posY){
                             QuitarValor(Partida.zombis, pep);
                         }
                         contador_z = [];
-                        alert("Se pusieron a la mitat los zombis");
+                        alert("S'han posat a la meitat els zombis");
                     }
                 }
             }
