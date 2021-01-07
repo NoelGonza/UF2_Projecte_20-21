@@ -4,6 +4,8 @@ window.onload = function(){
     document.getElementById("acert").innerHTML = acertades;
     document.getElementById("perd").innerHTML = perdudes;
     document.getElementById("aban").innerHTML = abandonades;
+    document.getElementById("vid").innerHTML = Partida.vidas;
+    document.getElementById("punt").innerHTML = Partida.punts;
 }
 
 document.getElementById("mostra").addEventListener("click", mostra_numeros);
