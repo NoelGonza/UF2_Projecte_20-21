@@ -2,5 +2,9 @@ body{
     background-color: royalblue;
 }
 table{
-    background-color: seagreen;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }

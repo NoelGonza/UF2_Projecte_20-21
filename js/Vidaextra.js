@@ -1,7 +1,6 @@
-//Sumar vida suma una vida al llamarla
 var Vidaextra = function(){
     Recompensa.apply(this, arguments);
-
+    //Suma una vida
     this.Sumarvida = function(){
         return Partida.vidas++;
     }

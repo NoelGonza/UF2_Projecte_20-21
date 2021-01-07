@@ -1,4 +1,3 @@
-//Clase estrella para saber que es estrella
 var Estrella = function(){
     Element.apply(this, arguments);
 };

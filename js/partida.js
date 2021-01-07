@@ -637,7 +637,7 @@ document.getElementById("abandona").addEventListener("click", abandonar_partida)
 /* Creació d'una finestra filla per les estadistiques */
 var ventana1 = null;
 function ventanas(){
-    ventana1 = window.open("finestra1s.html", "finestra1", "top=0, left=700, width=710, height=707");
+    ventana1 = window.open("finestra1s.html", "finestra1", "top=0, left=700, width=660, height=715");
     ventana1.document.write("<p id='prueba'></p>");
 }
 
@@ -650,12 +650,12 @@ function tauler_stats(){
     for (let i=0;i < 16; i++){
         tablero += "<tr>";
         for (let j=0;j < 16; j++){
-            tablero += "<td>"+ (i+5) +"-"+ (j+5) +"</td>";
+            tablero += "<td bgcolor='green'>"+ (i+5) +"-"+ (j+5) +"</td>";
         }
         tablero +="</tr>";
         tablero += "<tr>";
         for (let j=0;j < 16; j++){
-            tablero += "<td id='"+ (i+5) +"-"+ (j+5) +"'></td>";
+            tablero += "<td bgcolor='31e240' id='"+ (i+5) +"-"+ (j+5) +"'></td>";
         }
         tablero +="</tr>";
     }

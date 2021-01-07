@@ -1,4 +1,3 @@
-//Clase zombi para saber que es zombi
 var Zombi = function(){
     Element.apply(this, arguments);
 };
